@@ -4,12 +4,11 @@ import { useAuthStore } from '../../src/modules/auth/store/auth.store';
 const sampleSession = {
   user: {
     id: 'user-1',
-    organizationId: 'org-1',
-    hotelId: 'hotel-1',
+    hospitalId: 'hospital-1',
     email: 'admin@example.com',
     firstName: 'Ada',
     lastName: 'Lovelace',
-    role: 'super_admin' as const,
+    role: 'admin' as const,
   },
   accessToken: 'access-token',
   refreshToken: 'refresh-token',

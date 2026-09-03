@@ -37,7 +37,7 @@ export function LoginForm({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
           name="email"
           control={control}
           render={({ field }) => (
-            <Input {...field} id="email" placeholder="you@hotel.com" autoComplete="email" />
+            <Input {...field} id="email" placeholder="you@hospital.com" autoComplete="email" />
           )}
         />
       </Form.Item>

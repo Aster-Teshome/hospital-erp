@@ -41,12 +41,11 @@ describe('LoginPage', () => {
     const session = {
       user: {
         id: 'user-1',
-        organizationId: 'org-1',
-        hotelId: 'hotel-1',
+        hospitalId: 'hospital-1',
         email: 'admin@smartech-demo.test',
         firstName: 'Demo',
         lastName: 'Admin',
-        role: 'super_admin' as const,
+        role: 'admin' as const,
       },
       accessToken: 'access-token',
       refreshToken: 'refresh-token',

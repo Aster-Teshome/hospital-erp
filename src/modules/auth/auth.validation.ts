@@ -12,8 +12,7 @@ export const loginSchema = z.object({
 export type LoginInput = z.infer<typeof loginSchema>;
 
 export const registerSchema = z.object({
-  organizationName: z.string().min(2, 'Organization name is too short'),
-  hotelName: z.string().min(2, 'Hotel name is too short'),
+  hospitalName: z.string().min(2, 'Hospital name is too short'),
   email: z.string().email('Enter a valid email'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   firstName: z.string().min(1, 'First name is required'),

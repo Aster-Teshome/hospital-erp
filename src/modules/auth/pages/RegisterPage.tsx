@@ -16,7 +16,7 @@ export function RegisterPage() {
   return (
     <Card style={{ width: 440 }}>
       <Typography.Title level={3} style={{ textAlign: 'center', marginTop: 0 }}>
-        Register your hotel
+        Register your hospital
       </Typography.Title>
 
       <RegisterForm

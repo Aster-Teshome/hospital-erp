@@ -7,8 +7,8 @@ const { Header, Sider, Content } = Layout;
 
 /**
  * Authenticated app shell: sidebar nav + header + routed content. As real
- * modules (reservations, billing, ...) get pages, add their nav entries to
- * `items` below and their routes in src/app/router.tsx.
+ * modules (patients, appointments, billing, ...) get pages, add their nav
+ * entries to `items` below and their routes in src/app/router.tsx.
  */
 export function AppLayout() {
   const navigate = useNavigate();

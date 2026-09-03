@@ -5,7 +5,7 @@ import { ROLES } from '../../../utils/roles';
 
 /**
  * Minimal landing page after login - proves the protected-route + session
- * pattern works end to end. Real modules (reservations, billing, ...) get
+ * pattern works end to end. Real modules (patients, appointments, ...) get
  * their own pages under src/modules/<name>/pages and a nav entry in
  * AppLayout.tsx; this page is not a template to copy for them.
  */
@@ -24,15 +24,13 @@ export function DashboardPage() {
       </Card>
 
       <RoleGuard
-        allow={[ROLES.SUPER_ADMIN]}
-        fallback={
-          <Alert type="info" showIcon title="Admin tools are hidden - your role doesn't include super_admin." />
-        }
+        allow={[ROLES.ADMIN]}
+        fallback={<Alert type="info" showIcon title="Admin tools are hidden - your role doesn't include admin." />}
       >
         <Card title="Admin tools">
           <Typography.Text>
-            Only super_admin users see this card (see RoleGuard.tsx) - organization/hotel
-            configuration will live here once the organizations module is built.
+            Only admin users see this card (see RoleGuard.tsx) - staff account management
+            (FR-AUTH-03) will live here once the users module is built.
           </Typography.Text>
         </Card>
       </RoleGuard>

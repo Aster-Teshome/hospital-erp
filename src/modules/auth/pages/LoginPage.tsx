@@ -26,7 +26,7 @@ export function LoginPage() {
       />
 
       <Typography.Paragraph style={{ textAlign: 'center', marginBottom: 0 }} type="secondary">
-        New hotel? <Link to="/register">Register your organization</Link>
+        Setting up a new hospital? <Link to="/register">Register it</Link>
       </Typography.Paragraph>
 
       <Typography.Paragraph style={{ textAlign: 'center', marginTop: 8, marginBottom: 0 }} type="secondary">

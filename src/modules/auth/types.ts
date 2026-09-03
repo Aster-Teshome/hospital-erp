@@ -2,8 +2,7 @@ import type { Role } from '../../utils/roles';
 
 export interface SafeUser {
   id: string;
-  organizationId: string;
-  hotelId: string | null;
+  hospitalId: string;
   email: string;
   firstName: string;
   lastName: string;

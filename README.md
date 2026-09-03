@@ -1,8 +1,13 @@
-# HMS Frontend
+# Hospital ERP Frontend
 
-Admin/staff dashboard for the Hotel Management System - talks to
-[hms-backend](https://github.com/Smart-Tech-Solution92/hms-backend). An
+Admin/staff dashboard for the Hospital Management System - talks to
+[hospital-erp-backend](https://github.com/Smart-Tech-Solution92/hospital-erp-backend). An
 independent project/repo from the backend, deployed separately.
+
+Implements the 2-month MVP covering authentication & roles, patient
+registration/EMR, appointments & doctor scheduling, outpatient & clinical
+management, emergency & basic inpatient management, laboratory,
+pharmacy & prescriptions, and billing/dashboard/reporting.
 
 ## Stack
 
@@ -20,8 +25,8 @@ npm install
 npm run dev                # http://localhost:5173
 ```
 
-Requires the backend running (see hms-backend's README) with its dev seed
-applied so you can log in immediately:
+Requires the backend running (see hospital-erp-backend's README) with its
+dev seed applied so you can log in immediately:
 
 ```
 email: admin@smartech-demo.test
@@ -49,8 +54,15 @@ src/
   modules/
     auth/                      ★ reference module - fully implemented, see below
     dashboard/                  Minimal landing page after login (not a template - real modules don't copy this)
-    reservations/ rooms/ customers/ billing/ payments/ revenue/
-    catalog/ organizations/ notifications/ employees/
+    patients/                   Registration, MRN, search, profile, clinical notes (FR-PAT-*)
+    appointments/                Booking, doctor schedules, calendar, status (FR-APT-*)
+    outpatient/                  Check-in, consultation, vitals, clinical orders (FR-OPD-*)
+    emergency/                   Registration, triage, treatment record, status (FR-EMG-*)
+    inpatient/                   Admission, wards & beds, bed assignment, discharge (FR-IPD-*)
+    laboratory/                  Orders, test catalog, sample tracking, results (FR-LAB-*)
+    pharmacy/                    Prescription queue, dispensing, inventory (FR-PHA-*)
+    billing/                     Service billing, payments, invoices, receipts (FR-BIL-*)
+    users/                       Staff account management by admins (FR-AUTH-03)
                                 (scaffolded folders only - not yet implemented)
   types/                      Cross-module shared types (e.g. API error body shape)
   utils/                      roles.ts (mirrors the backend's Role enum), extractErrorMessage.ts
@@ -96,6 +108,12 @@ Conventions demonstrated in `auth`:
 To add a new module: copy the file shape above, add its routes as children
 of `ProtectedRoute` in `src/app/router.tsx`, and add a nav entry in
 `AppLayout.tsx`.
+
+## Roles
+
+Mirrors the backend's Role enum (`src/utils/roles.ts`), per FR-AUTH-02:
+`admin`, `receptionist`, `doctor`, `nurse`, `lab_staff`, `pharmacist`,
+`cashier`.
 
 ## Scripts
 

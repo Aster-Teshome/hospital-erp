@@ -17,8 +17,7 @@ export function RegisterForm({ onSubmit, isSubmitting, errorMessage }: RegisterF
   } = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      organizationName: '',
-      hotelName: '',
+      hospitalName: '',
       email: '',
       password: '',
       firstName: '',
@@ -35,25 +34,16 @@ export function RegisterForm({ onSubmit, isSubmitting, errorMessage }: RegisterF
       )}
 
       <Form.Item
-        label="Organization name"
-        htmlFor="organizationName"
-        validateStatus={errors.organizationName ? 'error' : ''}
-        help={errors.organizationName?.message}
+        label="Hospital name"
+        htmlFor="hospitalName"
+        validateStatus={errors.hospitalName ? 'error' : ''}
+        help={errors.hospitalName?.message}
       >
         <Controller
-          name="organizationName"
+          name="hospitalName"
           control={control}
-          render={({ field }) => <Input {...field} id="organizationName" />}
+          render={({ field }) => <Input {...field} id="hospitalName" />}
         />
-      </Form.Item>
-
-      <Form.Item
-        label="Hotel name"
-        htmlFor="hotelName"
-        validateStatus={errors.hotelName ? 'error' : ''}
-        help={errors.hotelName?.message}
-      >
-        <Controller name="hotelName" control={control} render={({ field }) => <Input {...field} id="hotelName" />} />
       </Form.Item>
 
       <Form.Item
@@ -84,7 +74,7 @@ export function RegisterForm({ onSubmit, isSubmitting, errorMessage }: RegisterF
           name="email"
           control={control}
           render={({ field }) => (
-            <Input {...field} id="email" placeholder="you@hotel.com" autoComplete="email" />
+            <Input {...field} id="email" placeholder="you@hospital.com" autoComplete="email" />
           )}
         />
       </Form.Item>
@@ -104,7 +94,7 @@ export function RegisterForm({ onSubmit, isSubmitting, errorMessage }: RegisterF
 
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={isSubmitting} block>
-          Create organization
+          Register hospital
         </Button>
       </Form.Item>
     </Form>
