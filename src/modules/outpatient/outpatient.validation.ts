@@ -27,21 +27,21 @@ export const prescriptionItemSchema = z.object({
   dosage: z.string().min(1, 'Dosage is required (e.g. 500mg)'),
   frequency: z.string().min(1, 'Frequency is required (e.g. TID)'),
   duration: z.string().min(1, 'Duration is required (e.g. 5 days)'),
-  route: z.string().default('Oral'),
+  route: z.string(),
   instructions: z.string().optional(),
 });
 
 export const labOrderItemSchema = z.object({
   testName: z.string().min(1, 'Test name is required'),
   category: z.string().optional(),
-  urgency: z.enum(['routine', 'urgent', 'stat']).default('routine'),
+  urgency: z.enum(['routine', 'urgent', 'stat']),
   clinicalNotes: z.string().optional(),
 });
 
 export const referralSchema = z.object({
   departmentOrFacility: z.string().min(1, 'Department or Hospital name is required'),
   reason: z.string().min(1, 'Reason for referral is required'),
-  urgency: z.enum(['routine', 'urgent']).default('routine'),
+  urgency: z.enum(['routine', 'urgent']),
 });
 
 export const consultationSchema = z.object({
@@ -51,8 +51,8 @@ export const consultationSchema = z.object({
   primaryDiagnosis: z.string().min(1, 'Primary diagnosis is required'),
   secondaryDiagnosis: z.string().optional(),
   treatmentPlan: z.string().min(1, 'Treatment plan is required'),
-  prescriptions: z.array(prescriptionItemSchema).default([]),
-  labOrders: z.array(labOrderItemSchema).default([]),
+  prescriptions: z.array(prescriptionItemSchema),
+  labOrders: z.array(labOrderItemSchema),
   referral: referralSchema.optional(),
 });
 

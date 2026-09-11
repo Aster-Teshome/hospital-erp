@@ -55,13 +55,14 @@ export function BookingAppointmentModal({ open, onClose }: BookingAppointmentMod
 
   return (
     <Modal
+      centered
       title="Book New Appointment"
       open={open}
       onOk={handleSubmit(handleFormSubmit)}
       onCancel={handleCancel}
       confirmLoading={bookMutation.isPending}
       okText="Book Appointment"
-      destroyOnClose
+      destroyOnHidden
     >
       {submitError && (
         <Alert

@@ -75,6 +75,7 @@ export function DoctorScheduleModal({ open, onClose }: DoctorScheduleModalProps)
 
   return (
     <Modal
+      centered
       title="Doctor Working Schedules & Slots"
       open={open}
       onCancel={onClose}
