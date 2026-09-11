@@ -10,7 +10,7 @@ import {
   Typography,
   message,
 } from 'antd';
-import { CalendarOutlined, PlusOutlined, ScheduleOutlined } from '@ant-design/icons';
+import { CalendarOutlined, EyeOutlined, PlusOutlined, ScheduleOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import type { Appointment, AppointmentFilters, AppointmentStatus } from '../types';
 import {
@@ -21,11 +21,13 @@ import {
 import { AppointmentStatusTag } from '../components/AppointmentStatusTag';
 import { BookingAppointmentModal } from '../components/BookingAppointmentModal';
 import { DoctorScheduleModal } from '../components/DoctorScheduleModal';
+import { AppointmentDetailsDrawer } from '../components/AppointmentDetailsDrawer';
 
 export function AppointmentsPage() {
   const [filters, setFilters] = useState<AppointmentFilters>({});
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
 
   const { data: appointments = [], isLoading } = useAppointments(filters);
   const updateStatusMutation = useUpdateAppointmentStatus();
@@ -122,6 +124,15 @@ export function AppointmentsPage() {
       key: 'actions',
       render: (_, record) => (
         <Space size="small">
+          <Button
+            size="small"
+            type="text"
+            icon={<EyeOutlined />}
+            onClick={() => setSelectedAppointment(record)}
+          >
+            Details
+          </Button>
+
           {record.status === 'scheduled' && (
             <Button
               size="small"
@@ -256,6 +267,18 @@ export function AppointmentsPage() {
           dataSource={appointments}
           loading={isLoading}
           pagination={{ pageSize: 10 }}
+          onRow={(record) => ({
+            onClick: (e) => {
+              if (
+                (e.target as HTMLElement).closest('button') ||
+                (e.target as HTMLElement).closest('.ant-popover')
+              ) {
+                return;
+              }
+              setSelectedAppointment(record);
+            },
+            style: { cursor: 'pointer' },
+          })}
           locale={{
             emptyText: (
               <div style={{ padding: 24, textAlign: 'center' }}>
@@ -267,7 +290,7 @@ export function AppointmentsPage() {
         />
       </Card>
 
-      {/* Modals */}
+      {/* Modals & Drawers */}
       <BookingAppointmentModal
         open={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
@@ -276,6 +299,14 @@ export function AppointmentsPage() {
       <DoctorScheduleModal
         open={isScheduleOpen}
         onClose={() => setIsScheduleOpen(false)}
+      />
+
+      <AppointmentDetailsDrawer
+        open={Boolean(selectedAppointment)}
+        appointment={selectedAppointment}
+        onClose={() => setSelectedAppointment(null)}
+        onStatusChange={handleStatusChange}
+        onCancel={handleCancel}
       />
     </div>
   );
