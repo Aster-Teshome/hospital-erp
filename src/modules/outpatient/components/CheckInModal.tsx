@@ -51,13 +51,14 @@ export function CheckInModal({ open, onClose }: CheckInModalProps) {
 
   return (
     <Modal
+      centered
       title="Check In Patient to Outpatient (OPD)"
       open={open}
       onOk={handleSubmit(handleFormSubmit)}
       onCancel={handleCancel}
       confirmLoading={checkInMutation.isPending}
       okText="Complete Check-In"
-      destroyOnClose
+      destroyOnHidden
     >
       {submitError && (
         <Alert

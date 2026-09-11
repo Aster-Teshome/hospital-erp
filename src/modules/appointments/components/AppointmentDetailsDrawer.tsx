@@ -169,7 +169,7 @@ export function AppointmentDetailsDrawer({
                   </span>
                 </Space>
               </Descriptions.Item>
-              <Descriptions.Item label="Appointment Type" orientation="horizontal">
+              <Descriptions.Item label="Appointment Type">
                 <span style={{ textTransform: 'capitalize', fontWeight: 600 }}>
                   {appointment.type.replace('_', ' ')}
                 </span>

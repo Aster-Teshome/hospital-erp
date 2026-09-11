@@ -1,16 +1,31 @@
 import { useState } from 'react';
 import {
+  Badge,
   Button,
   Card,
   DatePicker,
+  Dropdown,
   Popconfirm,
   Select,
   Space,
   Table,
+  Tabs,
   Typography,
   message,
 } from 'antd';
-import { CalendarOutlined, EyeOutlined, PlusOutlined, ScheduleOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import {
+  CalendarOutlined,
+  CheckCircleOutlined,
+  CheckSquareOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+  EyeOutlined,
+  MoreOutlined,
+  PlusOutlined,
+  ScheduleOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import type { Appointment, AppointmentFilters, AppointmentStatus } from '../types';
 import {
@@ -53,155 +68,238 @@ export function AppointmentsPage() {
     );
   }
 
+  // Metric counts
+  const totalCount = appointments.length;
+  const scheduledCount = appointments.filter((a) => a.status === 'scheduled' || a.status === 'confirmed').length;
+  const checkedInCount = appointments.filter((a) => a.status === 'checked_in').length;
+  const completedCount = appointments.filter((a) => a.status === 'completed').length;
+
   const columns: ColumnsType<Appointment> = [
     {
       title: 'Patient',
       key: 'patient',
+      width: '28%',
       render: (_, record) => (
-        <div>
-          <Typography.Text strong>{record.patientName ?? record.patientId}</Typography.Text>
-          {record.patientMrn && (
-            <div>
-              <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-                MRN: {record.patientMrn}
-              </Typography.Text>
-            </div>
-          )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 10,
+              background: '#e0f2fe',
+              color: '#0284c7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 700,
+              fontSize: 14,
+              flexShrink: 0,
+              border: '1px solid #bae6fd',
+            }}
+          >
+            <UserOutlined />
+          </div>
+          <div style={{ minWidth: 0, overflow: 'hidden' }}>
+            <Typography.Text
+              strong
+              style={{
+                color: '#0f172a',
+                display: 'block',
+                fontSize: 13,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {record.patientName ?? record.patientId}
+            </Typography.Text>
+            <Typography.Text
+              type="secondary"
+              style={{ fontSize: 11, whiteSpace: 'nowrap', display: 'block' }}
+            >
+              MRN: {record.patientMrn ?? record.patientId}
+            </Typography.Text>
+          </div>
         </div>
       ),
     },
     {
-      title: 'Doctor',
+      title: 'Doctor & Department',
       key: 'doctor',
+      width: '24%',
       render: (_, record) => (
-        <div>
-          <Typography.Text>{record.doctorName ?? record.doctorId}</Typography.Text>
-          {record.doctorSpecialty && (
-            <div>
-              <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-                {record.doctorSpecialty}
-              </Typography.Text>
-            </div>
-          )}
+        <div style={{ minWidth: 0, overflow: 'hidden' }}>
+          <Typography.Text
+            strong
+            style={{
+              color: '#1e293b',
+              display: 'block',
+              fontSize: 13,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {record.doctorName ?? record.doctorId}
+          </Typography.Text>
+          <Typography.Text
+            type="secondary"
+            style={{ fontSize: 11, whiteSpace: 'nowrap', display: 'block' }}
+          >
+            {record.doctorSpecialty ?? 'General Practice'}
+          </Typography.Text>
         </div>
       ),
     },
     {
       title: 'Date & Time',
       key: 'dateTime',
+      width: '18%',
       render: (_, record) => (
-        <div>
-          <div>{record.appointmentDate}</div>
-          <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <div style={{ color: '#0f172a', fontWeight: 600, fontSize: 12 }}>
+            {record.appointmentDate}
+          </div>
+          <div style={{ color: '#64748b', fontSize: 11 }}>
+            <ClockCircleOutlined style={{ marginRight: 4 }} />
             {record.startTime} {record.endTime ? `- ${record.endTime}` : ''}
-          </Typography.Text>
+          </div>
         </div>
-      ),
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-      render: (type: string) => (
-        <span style={{ textTransform: 'capitalize' }}>{type.replace('_', ' ')}</span>
       ),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      width: '16%',
       render: (status: AppointmentStatus) => <AppointmentStatusTag status={status} />,
-    },
-    {
-      title: 'Reason',
-      dataIndex: 'reason',
-      key: 'reason',
-      ellipsis: true,
-      render: (reason?: string) => reason || '-',
     },
     {
       title: 'Actions',
       key: 'actions',
-      render: (_, record) => (
-        <Space size="small">
-          <Button
-            size="small"
-            type="text"
-            icon={<EyeOutlined />}
-            onClick={() => setSelectedAppointment(record)}
-          >
-            Details
-          </Button>
+      align: 'right',
+      width: '14%',
+      render: (_, record) => {
+        const moreMenuItems: MenuProps['items'] = [];
 
-          {record.status === 'scheduled' && (
+        if (record.status === 'scheduled') {
+          moreMenuItems.push({
+            key: 'confirm',
+            icon: <CheckSquareOutlined style={{ color: '#0284c7' }} />,
+            label: 'Confirm Appointment',
+            onClick: () => handleStatusChange(record.id, 'confirmed'),
+          });
+        }
+
+        if (record.status !== 'cancelled' && record.status !== 'completed') {
+          moreMenuItems.push({
+            type: 'divider',
+          });
+          moreMenuItems.push({
+            key: 'cancel',
+            danger: true,
+            icon: <CloseCircleOutlined />,
+            label: (
+              <Popconfirm
+                title="Cancel Appointment"
+                description="Are you sure you want to cancel this booking?"
+                onConfirm={() => handleCancel(record.id)}
+                okText="Cancel"
+                cancelText="Back"
+              >
+                <span>Cancel Booking</span>
+              </Popconfirm>
+            ),
+          });
+        }
+
+        return (
+          <Space size={6} style={{ whiteSpace: 'nowrap' }}>
             <Button
               size="small"
-              type="link"
-              onClick={() => handleStatusChange(record.id, 'confirmed')}
+              icon={<EyeOutlined />}
+              onClick={() => setSelectedAppointment(record)}
+              style={{ borderRadius: 6, fontSize: 12, height: 28 }}
             >
-              Confirm
+              Details
             </Button>
-          )}
 
-          {(record.status === 'scheduled' || record.status === 'confirmed') && (
-            <Button
-              size="small"
-              type="link"
-              onClick={() => handleStatusChange(record.id, 'checked_in')}
-            >
-              Check In
-            </Button>
-          )}
-
-          {record.status === 'checked_in' && (
-            <Button
-              size="small"
-              type="link"
-              onClick={() => handleStatusChange(record.id, 'completed')}
-            >
-              Complete
-            </Button>
-          )}
-
-          {record.status !== 'cancelled' && record.status !== 'completed' && (
-            <Popconfirm
-              title="Cancel Appointment"
-              description="Are you sure you want to cancel this appointment?"
-              onConfirm={() => handleCancel(record.id)}
-              okText="Yes, Cancel"
-              cancelText="No"
-            >
-              <Button size="small" type="link" danger>
-                Cancel
+            {(record.status === 'scheduled' || record.status === 'confirmed') && (
+              <Button
+                size="small"
+                type="primary"
+                onClick={() => handleStatusChange(record.id, 'checked_in')}
+                style={{ borderRadius: 6, fontSize: 12, fontWeight: 600, height: 28 }}
+              >
+                Check In
               </Button>
-            </Popconfirm>
-          )}
-        </Space>
-      ),
+            )}
+
+            {record.status === 'checked_in' && (
+              <Button
+                size="small"
+                type="primary"
+                style={{
+                  background: '#10b981',
+                  borderColor: '#10b981',
+                  borderRadius: 6,
+                  fontSize: 12,
+                  fontWeight: 600,
+                  height: 28,
+                }}
+                onClick={() => handleStatusChange(record.id, 'completed')}
+              >
+                Complete
+              </Button>
+            )}
+
+            {moreMenuItems.length > 0 && (
+              <Dropdown menu={{ items: moreMenuItems }} trigger={['click']} placement="bottomRight">
+                <Button
+                  size="small"
+                  type="text"
+                  icon={<MoreOutlined style={{ fontSize: 16 }} />}
+                  style={{ borderRadius: 6, width: 28, height: 28, padding: 0 }}
+                />
+              </Dropdown>
+            )}
+          </Space>
+        );
+      },
     },
   ];
 
+  const activeTabKey = filters.status ?? 'all';
+
+  function handleTabChange(key: string) {
+    setFilters((prev) => ({
+      ...prev,
+      status: key === 'all' ? undefined : (key as AppointmentStatus),
+    }));
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {/* Title & Action Buttons */}
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: 8,
+          gap: 12,
         }}
       >
         <div>
-          <Typography.Title level={3} style={{ margin: 0 }}>
+          <Typography.Title level={3} style={{ margin: 0, fontWeight: 700, color: '#0f172a' }}>
             Appointments
           </Typography.Title>
-          <Typography.Text type="secondary">
+          <Typography.Text type="secondary" style={{ fontSize: 14 }}>
             Manage patient bookings, clinic consultations, and doctor schedules
           </Typography.Text>
         </div>
 
-        <Space>
+        <Space size="middle">
           <Button icon={<ScheduleOutlined />} onClick={() => setIsScheduleOpen(true)}>
             Doctor Schedules
           </Button>
@@ -215,58 +313,269 @@ export function AppointmentsPage() {
         </Space>
       </div>
 
-      {/* Filters Bar */}
-      <Card size="small">
-        <Space wrap>
-          <Select
-            placeholder="Status"
-            allowClear
-            style={{ width: 150 }}
-            value={filters.status}
-            onChange={(val) => setFilters((prev) => ({ ...prev, status: val }))}
-            options={[
-              { value: 'scheduled', label: 'Scheduled' },
-              { value: 'confirmed', label: 'Confirmed' },
-              { value: 'checked_in', label: 'Checked In' },
-              { value: 'completed', label: 'Completed' },
-              { value: 'cancelled', label: 'Cancelled' },
+      {/* Appointments KPI Metrics Cards */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: 14,
+        }}
+      >
+        <div
+          className="clinical-card"
+          style={{
+            padding: '16px 18px',
+            borderRadius: 14,
+            borderLeft: '4px solid #0284c7',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
+              All Bookings
+            </div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
+              {totalCount}
+            </div>
+          </div>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              background: '#e0f2fe',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#0284c7',
+              fontSize: 18,
+            }}
+          >
+            <CalendarOutlined />
+          </div>
+        </div>
+
+        <div
+          className="clinical-card"
+          style={{
+            padding: '16px 18px',
+            borderRadius: 14,
+            borderLeft: '4px solid #f59e0b',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
+              Scheduled / Confirmed
+            </div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: '#b45309', marginTop: 4 }}>
+              {scheduledCount}
+            </div>
+          </div>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              background: '#fef3c7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#d97706',
+              fontSize: 18,
+            }}
+          >
+            <ClockCircleOutlined />
+          </div>
+        </div>
+
+        <div
+          className="clinical-card"
+          style={{
+            padding: '16px 18px',
+            borderRadius: 14,
+            borderLeft: '4px solid #8b5cf6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
+              Checked In
+            </div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: '#6b21a8', marginTop: 4 }}>
+              {checkedInCount}
+            </div>
+          </div>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              background: '#f3e8ff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#8b5cf6',
+              fontSize: 18,
+            }}
+          >
+            <UserOutlined />
+          </div>
+        </div>
+
+        <div
+          className="clinical-card"
+          style={{
+            padding: '16px 18px',
+            borderRadius: 14,
+            borderLeft: '4px solid #10b981',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
+              Completed
+            </div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: '#15803d', marginTop: 4 }}>
+              {completedCount}
+            </div>
+          </div>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              background: '#dcfce7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#10b981',
+              fontSize: 18,
+            }}
+          >
+            <CheckCircleOutlined />
+          </div>
+        </div>
+      </div>
+
+      {/* Appointments List Table with Filter Tabs */}
+      <Card style={{ border: '1px solid #e2e8f0', borderRadius: 14 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 12,
+            marginBottom: 16,
+            borderBottom: '1px solid #f1f5f9',
+            paddingBottom: 8,
+          }}
+        >
+          <Tabs
+            activeKey={activeTabKey}
+            onChange={handleTabChange}
+            tabBarStyle={{ margin: 0, border: 'none' }}
+            items={[
+              {
+                key: 'all',
+                label: (
+                  <Space size={6}>
+                    <span>All</span>
+                    <Badge count={totalCount} style={{ backgroundColor: '#64748b' }} />
+                  </Space>
+                ),
+              },
+              {
+                key: 'scheduled',
+                label: (
+                  <Space size={6}>
+                    <span>Scheduled</span>
+                    <Badge count={appointments.filter((a) => a.status === 'scheduled').length} style={{ backgroundColor: '#0284c7' }} />
+                  </Space>
+                ),
+              },
+              {
+                key: 'confirmed',
+                label: (
+                  <Space size={6}>
+                    <span>Confirmed</span>
+                    <Badge count={appointments.filter((a) => a.status === 'confirmed').length} style={{ backgroundColor: '#38bdf8' }} />
+                  </Space>
+                ),
+              },
+              {
+                key: 'checked_in',
+                label: (
+                  <Space size={6}>
+                    <span>Checked In</span>
+                    <Badge count={checkedInCount} style={{ backgroundColor: '#8b5cf6' }} />
+                  </Space>
+                ),
+              },
+              {
+                key: 'completed',
+                label: (
+                  <Space size={6}>
+                    <span>Completed</span>
+                    <Badge count={completedCount} style={{ backgroundColor: '#10b981' }} />
+                  </Space>
+                ),
+              },
+              {
+                key: 'cancelled',
+                label: (
+                  <Space size={6}>
+                    <span>Cancelled</span>
+                    <Badge count={appointments.filter((a) => a.status === 'cancelled').length} style={{ backgroundColor: '#ef4444' }} />
+                  </Space>
+                ),
+              },
             ]}
           />
 
-          <DatePicker
-            placeholder="Filter by Date"
-            onChange={(_, dateStr) =>
-              setFilters((prev) => ({
-                ...prev,
-                date: Array.isArray(dateStr) ? dateStr[0] : (dateStr || undefined),
-              }))
-            }
-          />
+          <Space wrap size="middle">
+            <DatePicker
+              placeholder="Filter by Date"
+              style={{ width: 160 }}
+              onChange={(_, dateStr) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  date: Array.isArray(dateStr) ? dateStr[0] : (dateStr || undefined),
+                }))
+              }
+            />
 
-          <Select
-            placeholder="Filter by Doctor"
-            allowClear
-            style={{ width: 220 }}
-            value={filters.doctorId}
-            onChange={(val) => setFilters((prev) => ({ ...prev, doctorId: val }))}
-            options={[
-              { value: 'doc-1', label: 'Dr. Abebe Kebede' },
-              { value: 'doc-2', label: 'Dr. Sara Tesfaye' },
-              { value: 'doc-3', label: 'Dr. Daniel Haile' },
-              { value: 'doc-4', label: 'Dr. Tigist Mengistu' },
-            ]}
-          />
-        </Space>
-      </Card>
+            <Select
+              placeholder="Filter by Doctor"
+              allowClear
+              style={{ width: 220 }}
+              value={filters.doctorId}
+              onChange={(val) => setFilters((prev) => ({ ...prev, doctorId: val }))}
+              options={[
+                { value: 'doc-1', label: 'Dr. Abebe Kebede' },
+                { value: 'doc-2', label: 'Dr. Sara Tesfaye' },
+                { value: 'doc-3', label: 'Dr. Daniel Haile' },
+                { value: 'doc-4', label: 'Dr. Tigist Mengistu' },
+              ]}
+            />
+          </Space>
+        </div>
 
-      {/* Appointments List Table */}
-      <Card>
         <Table<Appointment>
           rowKey="id"
           columns={columns}
           dataSource={appointments}
           loading={isLoading}
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 8 }}
           onRow={(record) => ({
             onClick: (e) => {
               if (
@@ -281,9 +590,11 @@ export function AppointmentsPage() {
           })}
           locale={{
             emptyText: (
-              <div style={{ padding: 24, textAlign: 'center' }}>
-                <CalendarOutlined style={{ fontSize: 36, color: '#bfbfbf', marginBottom: 8 }} />
-                <div>No appointments found. Book an appointment to get started.</div>
+              <div style={{ padding: 36, textAlign: 'center' }}>
+                <CalendarOutlined style={{ fontSize: 36, color: '#cbd5e1', marginBottom: 10 }} />
+                <Typography.Text strong style={{ display: 'block', color: '#475569' }}>
+                  No appointments found
+                </Typography.Text>
               </div>
             ),
           }}
