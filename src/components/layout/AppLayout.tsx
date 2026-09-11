@@ -2,6 +2,7 @@ import {
   CalendarOutlined,
   DashboardOutlined,
   LogoutOutlined,
+  MedicineBoxOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Avatar, Layout, Menu, Space, Typography } from 'antd';
@@ -22,7 +23,11 @@ export function AppLayout() {
     navigate('/login', { replace: true });
   }
 
-  const selectedKey = location.pathname.startsWith('/appointments') ? 'appointments' : 'dashboard';
+  const selectedKey = location.pathname.startsWith('/outpatient')
+    ? 'outpatient'
+    : location.pathname.startsWith('/appointments')
+      ? 'appointments'
+      : 'dashboard';
 
   const items = [
     {
@@ -36,6 +41,12 @@ export function AppLayout() {
       icon: <CalendarOutlined style={{ fontSize: 16 }} />,
       label: 'Appointments',
       onClick: () => navigate('/appointments'),
+    },
+    {
+      key: 'outpatient',
+      icon: <MedicineBoxOutlined style={{ fontSize: 16 }} />,
+      label: 'Outpatient (OPD)',
+      onClick: () => navigate('/outpatient'),
     },
   ];
 
