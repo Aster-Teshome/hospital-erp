@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, Col, Drawer, Form, InputNumber, Row, Space, Tag, Typography, message } from 'antd';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import type { OpdVisit } from '../types';
 import { vitalsSchema, type VitalsInput } from '../outpatient.validation';
 import { useRecordVitals } from '../hooks/outpatient.hooks';
@@ -20,7 +20,6 @@ export function VitalSignsDrawer({ open, visit, onClose }: VitalSignsDrawerProps
   const {
     control,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<VitalsInput>({
@@ -37,8 +36,8 @@ export function VitalSignsDrawer({ open, visit, onClose }: VitalSignsDrawerProps
     },
   });
 
-  const weight = watch('weight');
-  const height = watch('height');
+  const weight = useWatch({ control, name: 'weight' });
+  const height = useWatch({ control, name: 'height' });
 
   // Live BMI calculation: weight(kg) / (height(m) * height(m))
   let bmi: number | null = null;
