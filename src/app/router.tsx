@@ -6,6 +6,8 @@ import { LoginPage } from '../modules/auth/pages/LoginPage';
 import { RegisterPage } from '../modules/auth/pages/RegisterPage';
 import { DashboardPage } from '../modules/dashboard/pages/DashboardPage';
 
+import { AppointmentsPage } from '../modules/appointments/pages/AppointmentsPage';
+
 /**
  * Route tree: public auth pages under AuthLayout, everything else behind
  * ProtectedRoute + AppLayout. Add a new module's routes as children of the
@@ -24,7 +26,10 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <AppLayout />,
-        children: [{ path: '/', element: <DashboardPage /> }],
+        children: [
+          { path: '/', element: <DashboardPage /> },
+          { path: '/appointments', element: <AppointmentsPage /> },
+        ],
       },
     ],
   },
