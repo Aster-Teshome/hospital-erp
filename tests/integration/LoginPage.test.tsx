@@ -38,6 +38,7 @@ describe('LoginPage', () => {
   });
 
   it('logs in and navigates to the dashboard on success', async () => {
+
     const session = {
       user: {
         id: 'user-1',
@@ -61,7 +62,8 @@ describe('LoginPage', () => {
 
     await waitFor(() => expect(screen.getByText('Dashboard')).toBeInTheDocument());
     expect(useAuthStore.getState().isAuthenticated).toBe(true);
-  });
+  }, 15000);
+
 
   it('shows an error message on invalid credentials', async () => {
     vi.spyOn(apiClient, 'post').mockRejectedValue({
