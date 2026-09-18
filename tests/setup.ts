@@ -1,4 +1,11 @@
 import '@testing-library/jest-dom/vitest';
+import { cleanup } from '@testing-library/react';
+import { afterEach } from 'vitest';
+
+afterEach(() => {
+  cleanup();
+});
+
 
 // jsdom doesn't implement matchMedia; Ant Design's responsive components
 // (Layout.Sider's breakpoint prop, Grid) need it even in a basic render.

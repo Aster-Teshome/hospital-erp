@@ -323,7 +323,7 @@ export function AppointmentsPage() {
         }}
       >
         <div
-          className="clinical-card"
+          className="clinical-card hover-lift"
           style={{
             padding: '16px 18px',
             borderRadius: 14,
@@ -359,7 +359,7 @@ export function AppointmentsPage() {
         </div>
 
         <div
-          className="clinical-card"
+          className="clinical-card hover-lift"
           style={{
             padding: '16px 18px',
             borderRadius: 14,
@@ -395,7 +395,7 @@ export function AppointmentsPage() {
         </div>
 
         <div
-          className="clinical-card"
+          className="clinical-card hover-lift"
           style={{
             padding: '16px 18px',
             borderRadius: 14,
@@ -431,7 +431,7 @@ export function AppointmentsPage() {
         </div>
 
         <div
-          className="clinical-card"
+          className="clinical-card hover-lift"
           style={{
             padding: '16px 18px',
             borderRadius: 14,

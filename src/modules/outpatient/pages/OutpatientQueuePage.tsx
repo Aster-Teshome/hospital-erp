@@ -356,7 +356,7 @@ export function OutpatientQueuePage() {
       <Row gutter={[14, 14]}>
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,
@@ -394,7 +394,7 @@ export function OutpatientQueuePage() {
 
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,
@@ -432,7 +432,7 @@ export function OutpatientQueuePage() {
 
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,
@@ -470,7 +470,7 @@ export function OutpatientQueuePage() {
 
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,

@@ -107,7 +107,15 @@ export function AppLayout() {
   const siderWidth = isMobile ? 0 : (collapsed ? 72 : 240);
 
   const sidebarContent = (isDrawer = false) => (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#090e17' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        background: 'linear-gradient(180deg, #0a0f1d 0%, #0f172a 100%)',
+        borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+      }}
+    >
       {/* Brand Header */}
       <div
         style={{
@@ -119,11 +127,11 @@ export function AppLayout() {
           transition: 'all 0.2s ease',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, overflow: 'hidden' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, overflow: 'hidden' }}>
           <div
             style={{
-              width: 36,
-              height: 36,
+              width: 38,
+              height: 38,
               borderRadius: 10,
               background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
               display: 'flex',
@@ -131,9 +139,10 @@ export function AppLayout() {
               justifyContent: 'center',
               color: '#ffffff',
               fontWeight: 800,
-              fontSize: 18,
+              fontSize: 20,
               flexShrink: 0,
-              boxShadow: '0 2px 8px rgba(2, 132, 199, 0.4)',
+              boxShadow: '0 0 16px rgba(2, 132, 199, 0.45)',
+              border: '1px solid rgba(56, 189, 248, 0.3)',
             }}
           >
             +
@@ -143,23 +152,38 @@ export function AppLayout() {
               <div
                 style={{
                   color: '#ffffff',
-                  fontWeight: 700,
+                  fontWeight: 800,
                   fontSize: 15,
-                  letterSpacing: '-0.01em',
+                  letterSpacing: '0.02em',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
                 }}
               >
-                HOSPITAL ERP
+                <span>HOSPITAL ERP</span>
+                <span
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    padding: '2px 5px',
+                    borderRadius: 4,
+                    background: 'rgba(56, 189, 248, 0.15)',
+                    color: '#38bdf8',
+                    border: '1px solid rgba(56, 189, 248, 0.3)',
+                  }}
+                >
+                  PRO
+                </span>
               </div>
               <div
                 style={{
                   color: '#94a3b8',
                   fontSize: 11,
                   fontWeight: 500,
-                  textTransform: 'uppercase',
                   letterSpacing: '0.04em',
                 }}
               >
-                Clinical Suite
+                Clinical Enterprise Suite
               </div>
             </div>
           )}
@@ -295,19 +319,20 @@ export function AppLayout() {
       >
         {/* Fixed Header */}
         <Header
+          className="glass-surface"
           style={{
-            background: '#ffffff',
             padding: isMobile ? '0 12px' : '0 24px',
-            height: 60,
+            height: 64,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             borderBottom: '1px solid #e2e8f0',
             flexShrink: 0,
             zIndex: 90,
+            boxShadow: '0 1px 4px 0 rgba(15, 23, 42, 0.04)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <Button
               type="text"
               aria-label={isMobile ? 'Open navigation menu' : (collapsed ? 'Expand sidebar' : 'Collapse sidebar')}
@@ -344,35 +369,113 @@ export function AppLayout() {
                     : 'Collapse sidebar'
               }
             />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div
                 style={{
-                  display: 'inline-block',
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: '#10b981',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '3px 8px',
+                  borderRadius: 6,
+                  background: '#ecfdf5',
+                  border: '1px solid #a7f3d0',
                 }}
-              />
-              <span style={{ fontWeight: 600, fontSize: 14, color: '#0f172a' }}>
+              >
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: 7,
+                    height: 7,
+                    borderRadius: '50%',
+                    background: '#10b981',
+                  }}
+                />
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#065f46', textTransform: 'uppercase' }}>
+                  ONLINE
+                </span>
+              </div>
+              <span style={{ fontWeight: 700, fontSize: 15, color: '#0f172a', letterSpacing: '-0.01em' }}>
                 Central Hospital ERP
               </span>
             </div>
+
+            {!isMobile && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '3px 10px',
+                  borderRadius: 20,
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                  fontSize: 12,
+                  color: '#64748b',
+                  fontWeight: 500,
+                  marginLeft: 8,
+                }}
+              >
+                <span>🏥 General & Trauma Center</span>
+                <span>•</span>
+                <span style={{ color: '#0284c7', fontWeight: 600 }}>Active Shift</span>
+              </div>
+            )}
           </div>
 
-          <Space size="middle">
+          <Space size="middle" align="center">
             {!isMobile && (
-              <Typography.Text type="secondary" style={{ fontSize: 13 }}>
-                Signed in as <strong style={{ color: '#0f172a' }}>{user?.email}</strong>
-              </Typography.Text>
+              <Button
+                size="small"
+                type="primary"
+                danger
+                icon={<AlertOutlined />}
+                onClick={() => navigate('/emergency')}
+                style={{
+                  fontWeight: 600,
+                  borderRadius: 6,
+                  boxShadow: '0 2px 6px rgba(239, 68, 68, 0.25)',
+                }}
+              >
+                Emergency ED
+              </Button>
             )}
+
+            {!isMobile && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '4px 10px',
+                  borderRadius: 8,
+                  background: '#f1f5f9',
+                  border: '1px solid #e2e8f0',
+                }}
+              >
+                <Avatar
+                  size="small"
+                  style={{ backgroundColor: '#0284c7', fontSize: 12, fontWeight: 700 }}
+                >
+                  {user?.firstName?.[0] ?? 'S'}
+                </Avatar>
+                <div style={{ lineHeight: 1.2 }}>
+                  <Typography.Text strong style={{ fontSize: 12, color: '#0f172a', display: 'block' }}>
+                    {user?.firstName ? `${user.firstName} ${user.lastName ?? ''}` : 'Medical Staff'}
+                  </Typography.Text>
+                  <Typography.Text type="secondary" style={{ fontSize: 10 }}>
+                    {user?.email}
+                  </Typography.Text>
+                </div>
+              </div>
+            )}
+
             <Button
               size="small"
               type="text"
               danger
               icon={<LogoutOutlined />}
               onClick={handleLogout}
-              style={{ fontSize: 12, fontWeight: 500 }}
+              style={{ fontSize: 12, fontWeight: 600 }}
             >
               Sign out
             </Button>
