@@ -128,12 +128,23 @@ export function InpatientDashboardPage() {
     {
       title: 'Patient',
       key: 'patient',
+      width: 240,
       render: (_: unknown, record: InpatientAdmission) => (
-        <div>
-          <Typography.Text strong style={{ color: '#0f172a', fontSize: 14 }}>
+        <div style={{ minWidth: 0, overflow: 'hidden' }}>
+          <Typography.Text
+            strong
+            style={{
+              color: '#0f172a',
+              fontSize: 14,
+              display: 'block',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
             {record.patientName}
           </Typography.Text>
-          <div style={{ fontSize: 12, color: '#64748b' }}>
+          <div style={{ fontSize: 12, color: '#64748b', whiteSpace: 'nowrap' }}>
             MRN: <span style={{ fontFamily: 'monospace', color: '#1e293b' }}>{record.patientMrn}</span>
             {` • ${record.gender.toUpperCase()} • ${record.age} yrs`}
           </div>
@@ -143,8 +154,9 @@ export function InpatientDashboardPage() {
     {
       title: 'Ward & Bed',
       key: 'wardBed',
+      width: 150,
       render: (_: unknown, record: InpatientAdmission) => (
-        <div>
+        <div style={{ whiteSpace: 'nowrap' }}>
           <Typography.Text strong style={{ color: '#2563eb' }}>
             {record.bedNumber}
           </Typography.Text>
@@ -156,6 +168,7 @@ export function InpatientDashboardPage() {
       title: 'Severity',
       dataIndex: 'severity',
       key: 'severity',
+      width: 130,
       render: (severity: InpatientAdmission['severity']) => (
         <SeverityBadge severity={severity} />
       ),
@@ -164,27 +177,62 @@ export function InpatientDashboardPage() {
       title: 'Admitting Diagnosis',
       dataIndex: 'admittingDiagnosis',
       key: 'admittingDiagnosis',
+      width: 260,
+      ellipsis: true,
       render: (diag: string) => (
-        <span style={{ fontSize: 13, color: '#334155' }}>{diag}</span>
+        <span
+          style={{
+            fontSize: 13,
+            color: '#334155',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: 'block',
+          }}
+          title={diag}
+        >
+          {diag}
+        </span>
       ),
     },
     {
       title: 'Attending Physician',
       dataIndex: 'attendingDoctor',
       key: 'attendingDoctor',
-      render: (doc: string) => <span style={{ fontWeight: 500, fontSize: 13 }}>{doc}</span>,
+      width: 180,
+      ellipsis: true,
+      render: (doc: string) => (
+        <span
+          style={{
+            fontWeight: 500,
+            fontSize: 13,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: 'block',
+          }}
+          title={doc}
+        >
+          {doc}
+        </span>
+      ),
     },
     {
       title: 'Admitted At',
       dataIndex: 'admissionDate',
       key: 'admissionDate',
-      render: (date: string) => <span style={{ fontSize: 12, color: '#64748b' }}>{date}</span>,
+      width: 140,
+      render: (date: string) => (
+        <span style={{ fontSize: 12, color: '#64748b', whiteSpace: 'nowrap' }}>{date}</span>
+      ),
     },
     {
       title: 'Actions',
       key: 'actions',
+      width: 220,
+      fixed: 'right' as const,
       render: (_: unknown, record: InpatientAdmission) => (
-        <Space size="small">
+        <Space size="small" style={{ whiteSpace: 'nowrap' }}>
           <Button
             size="small"
             icon={<EyeOutlined />}
@@ -216,18 +264,32 @@ export function InpatientDashboardPage() {
     {
       title: 'Patient',
       key: 'patient',
+      width: 240,
       render: (_: unknown, record: InpatientAdmission) => (
-        <div>
-          <Typography.Text strong>{record.patientName}</Typography.Text>
-          <div style={{ fontSize: 12, color: '#64748b' }}>MRN: {record.patientMrn}</div>
+        <div style={{ minWidth: 0, overflow: 'hidden' }}>
+          <Typography.Text
+            strong
+            style={{
+              display: 'block',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {record.patientName}
+          </Typography.Text>
+          <div style={{ fontSize: 12, color: '#64748b', whiteSpace: 'nowrap' }}>
+            MRN: {record.patientMrn}
+          </div>
         </div>
       ),
     },
     {
       title: 'Discharged From',
       key: 'wardBed',
+      width: 180,
       render: (_: unknown, record: InpatientAdmission) => (
-        <span>
+        <span style={{ whiteSpace: 'nowrap' }}>
           {record.bedNumber} ({record.wardName})
         </span>
       ),
@@ -236,14 +298,18 @@ export function InpatientDashboardPage() {
       title: 'Discharge Date',
       dataIndex: 'dischargeDate',
       key: 'dischargeDate',
-      render: (date: string) => <span style={{ fontSize: 12 }}>{date || 'N/A'}</span>,
+      width: 150,
+      render: (date: string) => (
+        <span style={{ fontSize: 12, whiteSpace: 'nowrap' }}>{date || 'N/A'}</span>
+      ),
     },
     {
       title: 'Condition',
       dataIndex: 'dischargeCondition',
       key: 'dischargeCondition',
+      width: 140,
       render: (cond?: string) => (
-        <Tag color="green" style={{ textTransform: 'uppercase', fontWeight: 600 }}>
+        <Tag color="green" style={{ textTransform: 'uppercase', fontWeight: 600, whiteSpace: 'nowrap' }}>
           {cond || 'Recovered'}
         </Tag>
       ),
@@ -252,18 +318,35 @@ export function InpatientDashboardPage() {
       title: 'Discharge Summary',
       dataIndex: 'dischargeSummary',
       key: 'dischargeSummary',
+      width: 280,
+      ellipsis: true,
       render: (summary?: string) => (
-        <span style={{ fontSize: 12, color: '#475569' }}>{summary || 'N/A'}</span>
+        <span
+          style={{
+            fontSize: 12,
+            color: '#475569',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: 'block',
+          }}
+          title={summary || 'N/A'}
+        >
+          {summary || 'N/A'}
+        </span>
       ),
     },
     {
       title: 'Actions',
       key: 'actions',
+      width: 130,
+      fixed: 'right' as const,
       render: (_: unknown, record: InpatientAdmission) => (
         <Button
           size="small"
           icon={<EyeOutlined />}
           onClick={() => handleViewDetails(record.id)}
+          style={{ whiteSpace: 'nowrap' }}
         >
           View Record
         </Button>
@@ -385,8 +468,9 @@ export function InpatientDashboardPage() {
                   columns={rosterColumns}
                   rowKey="id"
                   loading={isLoadingAdmissions}
+                  tableLayout="fixed"
                   pagination={{ pageSize: 8 }}
-                  scroll={{ x: 900 }}
+                  scroll={{ x: 1320 }}
                   style={{ marginTop: 8 }}
                 />
               ),
@@ -405,8 +489,9 @@ export function InpatientDashboardPage() {
                   columns={dischargeColumns}
                   rowKey="id"
                   loading={isLoadingAdmissions}
+                  tableLayout="fixed"
                   pagination={{ pageSize: 8 }}
-                  scroll={{ x: 800 }}
+                  scroll={{ x: 1120 }}
                   style={{ marginTop: 8 }}
                 />
               ),

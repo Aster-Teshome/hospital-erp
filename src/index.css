@@ -105,4 +105,21 @@ body {
   }
 }
 
+/* Table containment & robust layout rules */
+.ant-table table {
+  table-layout: fixed;
+}
+
+.ant-table-cell {
+  word-break: normal;
+  vertical-align: middle;
+}
+
+.ant-table-cell-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
 

@@ -78,7 +78,7 @@ export function AppointmentsPage() {
     {
       title: 'Patient',
       key: 'patient',
-      width: '28%',
+      width: 250,
       render: (_, record) => (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
           <div
@@ -126,7 +126,7 @@ export function AppointmentsPage() {
     {
       title: 'Doctor & Department',
       key: 'doctor',
-      width: '24%',
+      width: 230,
       render: (_, record) => (
         <div style={{ minWidth: 0, overflow: 'hidden' }}>
           <Typography.Text
@@ -154,7 +154,7 @@ export function AppointmentsPage() {
     {
       title: 'Date & Time',
       key: 'dateTime',
-      width: '18%',
+      width: 170,
       render: (_, record) => (
         <div style={{ whiteSpace: 'nowrap' }}>
           <div style={{ color: '#0f172a', fontWeight: 600, fontSize: 12 }}>
@@ -171,14 +171,15 @@ export function AppointmentsPage() {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: '16%',
+      width: 140,
       render: (status: AppointmentStatus) => <AppointmentStatusTag status={status} />,
     },
     {
       title: 'Actions',
       key: 'actions',
       align: 'right',
-      width: '14%',
+      width: 160,
+      fixed: 'right',
       render: (_, record) => {
         const moreMenuItems: MenuProps['items'] = [];
 
@@ -575,8 +576,9 @@ export function AppointmentsPage() {
           columns={columns}
           dataSource={appointments}
           loading={isLoading}
+          tableLayout="fixed"
           pagination={{ pageSize: 8 }}
-          scroll={{ x: 850 }}
+          scroll={{ x: 950 }}
           onRow={(record) => ({
             onClick: (e) => {
               if (
