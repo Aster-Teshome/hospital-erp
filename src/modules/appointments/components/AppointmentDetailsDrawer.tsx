@@ -57,7 +57,7 @@ export function AppointmentDetailsDrawer({
       }
       open={open}
       onClose={onClose}
-      width={520}
+      size={Math.min(520, typeof window !== 'undefined' ? window.innerWidth : 520)}
       footer={
         appointment && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

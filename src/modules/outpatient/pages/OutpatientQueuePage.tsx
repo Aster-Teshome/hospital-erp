@@ -591,6 +591,7 @@ export function OutpatientQueuePage() {
           dataSource={visits}
           loading={isLoading}
           pagination={{ pageSize: 8 }}
+          scroll={{ x: 850 }}
           locale={{
             emptyText: (
               <div style={{ padding: 40, textAlign: 'center' }}>

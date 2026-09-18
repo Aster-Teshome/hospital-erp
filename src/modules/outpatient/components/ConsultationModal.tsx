@@ -152,14 +152,14 @@ export function ConsultationModal({ open, visit, onClose }: ConsultationModalPro
       onCancel={handleCancel}
       confirmLoading={saveMutation.isPending}
       okText="Finalize Encounter"
-      width={900}
+      width={Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 32 : 900)}
       destroyOnHidden
     >
       {submitError && (
         <Alert
           type="error"
           showIcon
-          message="Consultation Error"
+          title="Consultation Error"
           description={submitError}
           style={{ marginBottom: 14 }}
         />

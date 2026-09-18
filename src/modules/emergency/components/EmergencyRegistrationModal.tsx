@@ -14,7 +14,7 @@ import {
   Typography,
   message,
 } from 'antd';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   emergencyRegistrationSchema,
@@ -38,7 +38,7 @@ export const EmergencyRegistrationModal: React.FC<EmergencyRegistrationModalProp
     control,
     handleSubmit,
     reset,
-    watch,
+    getValues,
     setValue,
     formState: { errors },
   } = useForm<EmergencyRegistrationInput>({
@@ -56,14 +56,14 @@ export const EmergencyRegistrationModal: React.FC<EmergencyRegistrationModalProp
     },
   });
 
-  const isUnidentified = watch('isUnidentified');
+  const isUnidentified = useWatch({ control, name: 'isUnidentified' });
 
   useEffect(() => {
     if (isUnidentified) {
       setValue('patientName', 'Trauma Unidentified / John Doe');
-      setValue('chiefComplaint', watch('chiefComplaint') || 'Unresponsive trauma casualty');
+      setValue('chiefComplaint', getValues('chiefComplaint') || 'Unresponsive trauma casualty');
     }
-  }, [isUnidentified, setValue, watch]);
+  }, [isUnidentified, setValue, getValues]);
 
   const onSubmit = async (data: EmergencyRegistrationInput) => {
     try {
@@ -94,22 +94,27 @@ export const EmergencyRegistrationModal: React.FC<EmergencyRegistrationModalProp
               display: 'inline-block',
             }}
           />
-          <Typography.Title level={4} style={{ margin: 0, fontSize: 18 }}>
-            Emergency Patient Registration
-          </Typography.Title>
+          <div>
+            <Typography.Title level={4} style={{ margin: 0, fontSize: 18 }}>
+              Emergency Patient Registration
+            </Typography.Title>
+            <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+              Fast-track trauma & acute intake. Minimum required fields for expedited resuscitation.
+            </Typography.Text>
+          </div>
         </div>
       }
       open={open}
       onCancel={handleCancel}
       footer={null}
-      width={700}
-      destroyOnClose
+      width={Math.min(700, typeof window !== 'undefined' ? window.innerWidth - 32 : 700)}
+      destroyOnHidden
     >
       <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: 16 }}>
         {registerMutation.isError && (
           <Alert
             type="error"
-            message={extractErrorMessage(registerMutation.error)}
+            title={extractErrorMessage(registerMutation.error)}
             showIcon
             style={{ marginBottom: 16 }}
           />

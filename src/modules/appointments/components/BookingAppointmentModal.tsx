@@ -63,12 +63,13 @@ export function BookingAppointmentModal({ open, onClose }: BookingAppointmentMod
       confirmLoading={bookMutation.isPending}
       okText="Book Appointment"
       destroyOnHidden
+      width={Math.min(520, typeof window !== 'undefined' ? window.innerWidth - 32 : 520)}
     >
       {submitError && (
         <Alert
           type="error"
           showIcon
-          message="Booking Error"
+          title="Booking Error"
           description={submitError}
           style={{ marginBottom: 16 }}
         />

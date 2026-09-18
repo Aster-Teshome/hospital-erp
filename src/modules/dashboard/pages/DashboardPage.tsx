@@ -1,6 +1,7 @@
 import { Alert, Card, Col, Row, Typography } from 'antd';
 import {
   AlertOutlined,
+  BankOutlined,
   CalendarOutlined,
   MedicineBoxOutlined,
   RightOutlined,
@@ -59,7 +60,7 @@ export function DashboardPage() {
         </Typography.Title>
 
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={12} md={8}>
+          <Col xs={24} sm={12} lg={6}>
             <Card
               hoverable
               onClick={() => navigate('/emergency')}
@@ -67,6 +68,7 @@ export function DashboardPage() {
                 borderRadius: 12,
                 borderLeft: '4px solid #ef4444',
                 borderColor: '#e2e8f0',
+                height: '100%',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -103,7 +105,52 @@ export function DashboardPage() {
             </Card>
           </Col>
 
-          <Col xs={24} sm={12} md={8}>
+          <Col xs={24} sm={12} lg={6}>
+            <Card
+              hoverable
+              onClick={() => navigate('/inpatient')}
+              style={{
+                borderRadius: 12,
+                borderLeft: '4px solid #3b82f6',
+                borderColor: '#e2e8f0',
+                height: '100%',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 10,
+                      background: '#eff6ff',
+                      color: '#3b82f6',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 20,
+                    }}
+                  >
+                    <BankOutlined />
+                  </div>
+                  <div>
+                    <Typography.Title level={5} style={{ margin: 0, fontSize: 15 }}>
+                      Inpatient (IPD)
+                    </Typography.Title>
+                    <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+                      Wards & Bed Map
+                    </Typography.Text>
+                  </div>
+                </div>
+                <RightOutlined style={{ color: '#94a3b8', fontSize: 12 }} />
+              </div>
+              <div style={{ marginTop: 14, fontSize: 12, color: '#64748b' }}>
+                Ward occupancy dashboard, real-time bed management grid, admissions, transfers, and discharges.
+              </div>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} lg={6}>
             <Card
               hoverable
               onClick={() => navigate('/outpatient')}
@@ -111,6 +158,7 @@ export function DashboardPage() {
                 borderRadius: 12,
                 borderLeft: '4px solid #0284c7',
                 borderColor: '#e2e8f0',
+                height: '100%',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -147,7 +195,7 @@ export function DashboardPage() {
             </Card>
           </Col>
 
-          <Col xs={24} sm={12} md={8}>
+          <Col xs={24} sm={12} lg={6}>
             <Card
               hoverable
               onClick={() => navigate('/appointments')}
@@ -155,6 +203,7 @@ export function DashboardPage() {
                 borderRadius: 12,
                 borderLeft: '4px solid #10b981',
                 borderColor: '#e2e8f0',
+                height: '100%',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -195,7 +244,7 @@ export function DashboardPage() {
 
       <RoleGuard
         allow={[ROLES.ADMIN]}
-        fallback={<Alert type="info" showIcon message="Admin management tools are restricted to System Administrators." />}
+        fallback={<Alert type="info" showIcon title="Admin management tools are restricted to System Administrators." />}
       >
         <Card title="Admin Administration Suite" style={{ borderRadius: 12 }}>
           <Typography.Text type="secondary">
