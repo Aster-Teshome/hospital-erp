@@ -321,18 +321,20 @@ export function AppLayout() {
         <Header
           className="glass-surface"
           style={{
-            padding: isMobile ? '0 12px' : '0 24px',
+            padding: isMobile ? '0 12px' : '0 20px',
             height: 64,
+            maxHeight: 64,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             borderBottom: '1px solid #e2e8f0',
             flexShrink: 0,
+            overflow: 'hidden',
             zIndex: 90,
             boxShadow: '0 1px 4px 0 rgba(15, 23, 42, 0.04)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0, minWidth: 0, whiteSpace: 'nowrap' }}>
             <Button
               type="text"
               aria-label={isMobile ? 'Open navigation menu' : (collapsed ? 'Expand sidebar' : 'Collapse sidebar')}
@@ -360,6 +362,7 @@ export function AppLayout() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#475569',
+                flexShrink: 0,
               }}
               title={
                 isMobile
@@ -369,16 +372,18 @@ export function AppLayout() {
                     : 'Collapse sidebar'
               }
             />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
               <div
                 style={{
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  gap: 6,
-                  padding: '3px 8px',
+                  gap: 5,
+                  padding: '3px 7px',
                   borderRadius: 6,
                   background: '#ecfdf5',
                   border: '1px solid #a7f3d0',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <span
@@ -388,21 +393,23 @@ export function AppLayout() {
                     height: 7,
                     borderRadius: '50%',
                     background: '#10b981',
+                    flexShrink: 0,
                   }}
                 />
-                <span style={{ fontSize: 11, fontWeight: 700, color: '#065f46', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#065f46', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   ONLINE
                 </span>
               </div>
-              <span style={{ fontWeight: 700, fontSize: 15, color: '#0f172a', letterSpacing: '-0.01em' }}>
+              <span style={{ fontWeight: 800, fontSize: 15, color: '#0f172a', letterSpacing: '-0.01em', whiteSpace: 'nowrap', flexShrink: 0 }}>
                 Central Hospital ERP
               </span>
             </div>
 
             {!isMobile && (
               <div
+                className="header-shift-badge"
                 style={{
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
                   gap: 6,
                   padding: '3px 10px',
@@ -412,17 +419,19 @@ export function AppLayout() {
                   fontSize: 12,
                   color: '#64748b',
                   fontWeight: 500,
-                  marginLeft: 8,
+                  marginLeft: 4,
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
                 }}
               >
                 <span>🏥 General & Trauma Center</span>
-                <span>•</span>
+                <span style={{ color: '#cbd5e1' }}>•</span>
                 <span style={{ color: '#0284c7', fontWeight: 600 }}>Active Shift</span>
               </div>
             )}
           </div>
 
-          <Space size="middle" align="center">
+          <Space size="middle" align="center" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
             {!isMobile && (
               <Button
                 size="small"
@@ -434,6 +443,8 @@ export function AppLayout() {
                   fontWeight: 600,
                   borderRadius: 6,
                   boxShadow: '0 2px 6px rgba(239, 68, 68, 0.25)',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
                 }}
               >
                 Emergency ED
@@ -450,19 +461,31 @@ export function AppLayout() {
                   borderRadius: 8,
                   background: '#f1f5f9',
                   border: '1px solid #e2e8f0',
+                  maxWidth: 180,
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
                 }}
               >
                 <Avatar
                   size="small"
-                  style={{ backgroundColor: '#0284c7', fontSize: 12, fontWeight: 700 }}
+                  style={{ backgroundColor: '#0284c7', fontSize: 12, fontWeight: 700, flexShrink: 0 }}
                 >
                   {user?.firstName?.[0] ?? 'S'}
                 </Avatar>
-                <div style={{ lineHeight: 1.2 }}>
-                  <Typography.Text strong style={{ fontSize: 12, color: '#0f172a', display: 'block' }}>
+                <div style={{ lineHeight: 1.2, minWidth: 0, overflow: 'hidden' }}>
+                  <Typography.Text
+                    strong
+                    ellipsis
+                    style={{ fontSize: 12, color: '#0f172a', display: 'block', maxWidth: 120 }}
+                  >
                     {user?.firstName ? `${user.firstName} ${user.lastName ?? ''}` : 'Medical Staff'}
                   </Typography.Text>
-                  <Typography.Text type="secondary" style={{ fontSize: 10 }}>
+                  <Typography.Text
+                    type="secondary"
+                    ellipsis
+                    style={{ fontSize: 10, display: 'block', maxWidth: 120 }}
+                  >
                     {user?.email}
                   </Typography.Text>
                 </div>
@@ -475,7 +498,7 @@ export function AppLayout() {
               danger
               icon={<LogoutOutlined />}
               onClick={handleLogout}
-              style={{ fontSize: 12, fontWeight: 600 }}
+              style={{ fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap', flexShrink: 0 }}
             >
               Sign out
             </Button>
