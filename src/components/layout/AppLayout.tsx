@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   AlertOutlined,
+  BankOutlined,
   CalendarOutlined,
   DashboardOutlined,
   LogoutOutlined,
@@ -30,11 +31,13 @@ export function AppLayout() {
 
   const selectedKey = location.pathname.startsWith('/emergency')
     ? 'emergency'
-    : location.pathname.startsWith('/outpatient')
-      ? 'outpatient'
-      : location.pathname.startsWith('/appointments')
-        ? 'appointments'
-        : 'dashboard';
+    : location.pathname.startsWith('/inpatient')
+      ? 'inpatient'
+      : location.pathname.startsWith('/outpatient')
+        ? 'outpatient'
+        : location.pathname.startsWith('/appointments')
+          ? 'appointments'
+          : 'dashboard';
 
   const items = [
     {
@@ -48,6 +51,12 @@ export function AppLayout() {
       icon: <AlertOutlined style={{ fontSize: 17, color: '#ef4444' }} />,
       label: 'Emergency (ED)',
       onClick: () => navigate('/emergency'),
+    },
+    {
+      key: 'inpatient',
+      icon: <BankOutlined style={{ fontSize: 17, color: '#3b82f6' }} />,
+      label: 'Inpatient (IPD)',
+      onClick: () => navigate('/inpatient'),
     },
     {
       key: 'appointments',
