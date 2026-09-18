@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  AlertOutlined,
   CalendarOutlined,
   DashboardOutlined,
   LogoutOutlined,
@@ -27,11 +28,13 @@ export function AppLayout() {
     navigate('/login', { replace: true });
   }
 
-  const selectedKey = location.pathname.startsWith('/outpatient')
-    ? 'outpatient'
-    : location.pathname.startsWith('/appointments')
-      ? 'appointments'
-      : 'dashboard';
+  const selectedKey = location.pathname.startsWith('/emergency')
+    ? 'emergency'
+    : location.pathname.startsWith('/outpatient')
+      ? 'outpatient'
+      : location.pathname.startsWith('/appointments')
+        ? 'appointments'
+        : 'dashboard';
 
   const items = [
     {
@@ -39,6 +42,12 @@ export function AppLayout() {
       icon: <DashboardOutlined style={{ fontSize: 17 }} />,
       label: 'Dashboard',
       onClick: () => navigate('/'),
+    },
+    {
+      key: 'emergency',
+      icon: <AlertOutlined style={{ fontSize: 17, color: '#ef4444' }} />,
+      label: 'Emergency (ED)',
+      onClick: () => navigate('/emergency'),
     },
     {
       key: 'appointments',
@@ -53,6 +62,7 @@ export function AppLayout() {
       onClick: () => navigate('/outpatient'),
     },
   ];
+
 
   const siderWidth = collapsed ? 72 : 240;
 

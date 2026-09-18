@@ -8,6 +8,7 @@ import { DashboardPage } from '../modules/dashboard/pages/DashboardPage';
 
 import { AppointmentsPage } from '../modules/appointments/pages/AppointmentsPage';
 import { OutpatientQueuePage } from '../modules/outpatient/pages/OutpatientQueuePage';
+import { EmergencyDashboardPage } from '../modules/emergency/pages/EmergencyDashboardPage';
 
 /**
  * Route tree: public auth pages under AuthLayout, everything else behind
@@ -31,8 +32,10 @@ export const router = createBrowserRouter([
           { path: '/', element: <DashboardPage /> },
           { path: '/appointments', element: <AppointmentsPage /> },
           { path: '/outpatient', element: <OutpatientQueuePage /> },
+          { path: '/emergency', element: <EmergencyDashboardPage /> },
         ],
       },
     ],
   },
 ]);
+
