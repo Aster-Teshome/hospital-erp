@@ -178,20 +178,43 @@ export function BedManagementGrid({
               <Col xs={24} sm={12} md={8} lg={6} key={bed.id}>
                 <Card
                   loading={isLoading}
+                  className="hover-lift"
                   styles={{ body: { padding: '16px' } }}
                   style={{
-                    borderRadius: 12,
+                    borderRadius: 14,
                     border: cardBorder,
                     background: cardBg,
                     boxShadow: isOccupied
-                      ? '0 2px 6px rgba(59, 130, 246, 0.06)'
-                      : '0 1px 3px rgba(0,0,0,0.04)',
+                      ? '0 4px 12px rgba(37, 99, 235, 0.06)'
+                      : isAvailable
+                        ? '0 4px 12px rgba(16, 185, 129, 0.05)'
+                        : '0 2px 6px rgba(0,0,0,0.03)',
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
                     justifyContent: 'space-between',
+                    position: 'relative',
+                    overflow: 'hidden',
                   }}
                 >
+                  {/* Top Status Accent Bar */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: 4,
+                      background: isOccupied
+                        ? '#2563eb'
+                        : isAvailable
+                          ? '#10b981'
+                          : isCleaning
+                            ? '#f59e0b'
+                            : '#ef4444',
+                    }}
+                  />
+
                   <div>
                     {/* Header: Bed Number + Badges */}
                     <div
@@ -200,15 +223,17 @@ export function BedManagementGrid({
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         marginBottom: 10,
+                        marginTop: 2,
                       }}
                     >
-                      <Space size={6}>
+                      <Space size={6} align="center">
                         <span
+                          className="clinical-mono"
                           style={{
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
+                            fontWeight: 800,
                             fontSize: 16,
                             color: '#0f172a',
+                            letterSpacing: '-0.02em',
                           }}
                         >
                           {bed.bedNumber}
@@ -218,7 +243,7 @@ export function BedManagementGrid({
                       <BedStatusBadge status={bed.status} />
                     </div>
 
-                    <div style={{ fontSize: 12, color: '#64748b', marginBottom: 12 }}>
+                    <div style={{ fontSize: 12, color: '#64748b', fontWeight: 500, marginBottom: 12 }}>
                       {bed.wardName}
                     </div>
 
@@ -227,8 +252,8 @@ export function BedManagementGrid({
                       <div
                         style={{
                           background: '#f8fafc',
-                          borderRadius: 8,
-                          padding: '10px 12px',
+                          borderRadius: 10,
+                          padding: '12px',
                           border: '1px solid #e2e8f0',
                           marginBottom: 12,
                         }}
@@ -238,7 +263,7 @@ export function BedManagementGrid({
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            marginBottom: 4,
+                            marginBottom: 6,
                           }}
                         >
                           <Typography.Text strong style={{ fontSize: 14, color: '#0f172a' }}>
@@ -247,9 +272,19 @@ export function BedManagementGrid({
                           <SeverityBadge severity={bed.currentPatient.severity} />
                         </div>
 
-                        <div style={{ fontSize: 11, color: '#64748b', marginBottom: 6 }}>
-                          MRN:{' '}
-                          <span style={{ fontFamily: 'monospace', color: '#334155' }}>
+                        <div style={{ fontSize: 11, color: '#64748b', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <span>MRN:</span>
+                          <span
+                            className="clinical-mono"
+                            style={{
+                              padding: '1px 5px',
+                              background: '#ffffff',
+                              border: '1px solid #cbd5e1',
+                              borderRadius: 4,
+                              color: '#0f172a',
+                              fontWeight: 600,
+                            }}
+                          >
                             {bed.currentPatient.patientMrn}
                           </span>
                         </div>
@@ -257,9 +292,9 @@ export function BedManagementGrid({
                         <div
                           style={{
                             fontSize: 12,
-                            color: '#1e293b',
-                            lineHeight: '1.4',
-                            marginBottom: 6,
+                            color: '#334155',
+                            lineHeight: '1.45',
+                            marginBottom: 8,
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
@@ -269,8 +304,8 @@ export function BedManagementGrid({
                           {bed.currentPatient.admittingDiagnosis}
                         </div>
 
-                        <div style={{ fontSize: 11, color: '#475569' }}>
-                          Physician: <strong>{bed.currentPatient.attendingDoctor}</strong>
+                        <div style={{ fontSize: 11, color: '#64748b', paddingTop: 6, borderTop: '1px solid #edf2f7' }}>
+                          Physician: <strong style={{ color: '#1e293b' }}>{bed.currentPatient.attendingDoctor}</strong>
                         </div>
                       </div>
                     )}
@@ -279,25 +314,25 @@ export function BedManagementGrid({
                     {isAvailable && (
                       <div
                         style={{
-                          minHeight: 90,
+                          minHeight: 100,
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'center',
                           alignItems: 'center',
-                          border: '1px dashed #cbd5e1',
-                          borderRadius: 8,
-                          background: '#ffffff',
+                          border: '1px dashed #a7f3d0',
+                          borderRadius: 10,
+                          background: 'linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%)',
                           marginBottom: 12,
-                          padding: '12px',
+                          padding: '14px',
                         }}
                       >
-                        <CheckCircleOutlined style={{ fontSize: 24, color: '#10b981', marginBottom: 6 }} />
-                        <span style={{ fontSize: 12, color: '#059669', fontWeight: 600 }}>
+                        <CheckCircleOutlined style={{ fontSize: 26, color: '#10b981', marginBottom: 6 }} />
+                        <span style={{ fontSize: 13, color: '#047857', fontWeight: 700 }}>
                           Bed Ready for Admission
                         </span>
                         {bed.dailyRate && (
-                          <span style={{ fontSize: 11, color: '#64748b', marginTop: 2 }}>
-                            ETB {bed.dailyRate}/day
+                          <span style={{ fontSize: 11, color: '#64748b', marginTop: 3 }}>
+                            Rate: ETB {bed.dailyRate}/day
                           </span>
                         )}
                       </div>
@@ -307,20 +342,20 @@ export function BedManagementGrid({
                     {isCleaning && (
                       <div
                         style={{
-                          minHeight: 90,
+                          minHeight: 100,
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'center',
                           alignItems: 'center',
                           border: '1px dashed #fde68a',
-                          borderRadius: 8,
+                          borderRadius: 10,
                           background: '#fffbeb',
                           marginBottom: 12,
-                          padding: '12px',
+                          padding: '14px',
                         }}
                       >
-                        <span style={{ fontSize: 12, color: '#b45309', fontWeight: 600 }}>
-                          Housekeeping / Sanitization in progress
+                        <span style={{ fontSize: 12, color: '#b45309', fontWeight: 700, textAlign: 'center' }}>
+                          🧹 Housekeeping & Sanitization In Progress
                         </span>
                       </div>
                     )}
@@ -329,20 +364,20 @@ export function BedManagementGrid({
                     {isMaintenance && (
                       <div
                         style={{
-                          minHeight: 90,
+                          minHeight: 100,
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'center',
                           alignItems: 'center',
                           border: '1px dashed #fecaca',
-                          borderRadius: 8,
+                          borderRadius: 10,
                           background: '#fef2f2',
                           marginBottom: 12,
-                          padding: '12px',
+                          padding: '14px',
                         }}
                       >
-                        <span style={{ fontSize: 12, color: '#b91c1c', fontWeight: 600 }}>
-                          Equipment maintenance / repair
+                        <span style={{ fontSize: 12, color: '#b91c1c', fontWeight: 700, textAlign: 'center' }}>
+                          ⚠️ Equipment Maintenance Required
                         </span>
                       </div>
                     )}
@@ -356,29 +391,35 @@ export function BedManagementGrid({
                         icon={<UserAddOutlined />}
                         block
                         onClick={() => onAdmitToBed(bed)}
-                        style={{ background: '#059669', borderColor: '#059669', borderRadius: 6 }}
+                        style={{
+                          background: '#10b981',
+                          borderColor: '#10b981',
+                          borderRadius: 8,
+                          fontWeight: 700,
+                          boxShadow: '0 2px 8px rgba(16, 185, 129, 0.3)',
+                        }}
                       >
                         Admit to Bed
                       </Button>
                     )}
 
                     {isOccupied && bed.currentPatient && (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
                         <Button
                           icon={<EyeOutlined />}
                           block
                           size="small"
                           onClick={() => onViewDetails(bed.currentPatient!.admissionId)}
-                          style={{ borderRadius: 6 }}
+                          style={{ borderRadius: 7, fontWeight: 500 }}
                         >
                           View Patient Stay
                         </Button>
-                        <div style={{ display: 'flex', gap: 6 }}>
+                        <div style={{ display: 'flex', gap: 8 }}>
                           <Button
                             icon={<SwapOutlined />}
                             size="small"
                             onClick={() => onTransferPatient(bed.currentPatient!.admissionId, bed)}
-                            style={{ flex: 1, borderRadius: 6 }}
+                            style={{ flex: 1, borderRadius: 7, fontWeight: 500 }}
                           >
                             Transfer
                           </Button>
@@ -388,7 +429,7 @@ export function BedManagementGrid({
                             size="small"
                             data-testid="discharge-bed-btn"
                             onClick={() => onDischargePatient(bed.currentPatient!.admissionId, bed)}
-                            style={{ flex: 1, borderRadius: 6 }}
+                            style={{ flex: 1, borderRadius: 7, fontWeight: 600 }}
                           >
                             Discharge
                           </Button>
@@ -407,7 +448,8 @@ export function BedManagementGrid({
                           background: '#fef3c7',
                           color: '#92400e',
                           borderColor: '#fde68a',
-                          borderRadius: 6,
+                          borderRadius: 7,
+                          fontWeight: 600,
                         }}
                       >
                         Mark Ready / Sanitized
@@ -424,7 +466,8 @@ export function BedManagementGrid({
                         style={{
                           background: '#f1f5f9',
                           color: '#334155',
-                          borderRadius: 6,
+                          borderRadius: 7,
+                          fontWeight: 600,
                         }}
                       >
                         Complete Maintenance

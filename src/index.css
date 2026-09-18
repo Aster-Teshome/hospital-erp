@@ -63,17 +63,67 @@ body {
   animation: clinical-pulse 2s infinite;
 }
 
-/* Glassmorphism card subtle highlights */
+/* Clinical Monospace Numbers & MRN */
+.clinical-mono {
+  font-family: 'JetBrains Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+/* Tactile interactive card hover lift */
+.hover-lift {
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.03) !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Glassmorphism clinical header & surfaces */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-surface-dark {
+  background: rgba(10, 15, 29, 0.92) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* High-urgency red clinical pulse for P1 Resuscitation */
+@keyframes clinical-pulse-red-keyframes {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 7px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.clinical-pulse-red {
+  animation: clinical-pulse-red-keyframes 1.8s infinite;
+}
+
+/* Refined clinical card */
 .clinical-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  border-radius: 14px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clinical-card:hover {
   border-color: #cbd5e1;
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
 }
 
 /* Mobile responsive optimizations */
@@ -104,5 +154,22 @@ body {
     word-break: break-word !important;
   }
 }
+
+/* Table containment & robust layout rules */
+.ant-table table {
+  table-layout: fixed;
+}
+
+.ant-table-cell {
+  word-break: normal;
+  vertical-align: middle;
+}
+
+.ant-table-cell-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 
 

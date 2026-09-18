@@ -74,7 +74,7 @@ export function OutpatientQueuePage() {
     {
       title: 'Patient',
       key: 'patient',
-      width: '26%',
+      width: 250,
       render: (_, record) => (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
           <div
@@ -136,7 +136,7 @@ export function OutpatientQueuePage() {
     {
       title: 'Attending Physician',
       key: 'doctor',
-      width: '20%',
+      width: 220,
       render: (_, record) => (
         <div style={{ minWidth: 0, overflow: 'hidden' }}>
           <Typography.Text
@@ -165,7 +165,7 @@ export function OutpatientQueuePage() {
       title: 'Check-In',
       dataIndex: 'checkInTime',
       key: 'checkInTime',
-      width: '12%',
+      width: 140,
       render: (time: string) => (
         <Tag
           style={{
@@ -187,7 +187,7 @@ export function OutpatientQueuePage() {
     {
       title: 'Vitals & Triage',
       key: 'vitals',
-      width: '18%',
+      width: 200,
       render: (_, record) => {
         if (!record.vitals) {
           return (
@@ -246,14 +246,15 @@ export function OutpatientQueuePage() {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: '14%',
+      width: 140,
       render: (status: OpdVisitStatus) => <OpdStatusBadge status={status} />,
     },
     {
       title: 'Actions',
       key: 'actions',
       align: 'right',
-      width: '10%',
+      width: 120,
+      fixed: 'right',
       render: (_, record) => {
         const moreMenuItems: MenuProps['items'] = [
           {
@@ -355,7 +356,7 @@ export function OutpatientQueuePage() {
       <Row gutter={[14, 14]}>
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,
@@ -393,7 +394,7 @@ export function OutpatientQueuePage() {
 
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,
@@ -431,7 +432,7 @@ export function OutpatientQueuePage() {
 
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,
@@ -469,7 +470,7 @@ export function OutpatientQueuePage() {
 
         <Col xs={12} sm={6}>
           <div
-            className="clinical-card"
+            className="clinical-card hover-lift"
             style={{
               padding: '16px 18px',
               borderRadius: 14,
@@ -590,8 +591,9 @@ export function OutpatientQueuePage() {
           columns={columns}
           dataSource={visits}
           loading={isLoading}
+          tableLayout="fixed"
           pagination={{ pageSize: 8 }}
-          scroll={{ x: 850 }}
+          scroll={{ x: 1070 }}
           locale={{
             emptyText: (
               <div style={{ padding: 40, textAlign: 'center' }}>

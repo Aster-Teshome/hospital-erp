@@ -53,12 +53,12 @@ export const EmergencyDashboardPage: React.FC = () => {
       title: 'Triage / Acuity',
       dataIndex: 'triageCategory',
       key: 'triageCategory',
-      width: 160,
+      width: 170,
       render: (cat: TriageCategory | undefined, record) => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minWidth: 0 }}>
           <TriageBadge category={cat} />
           {record.triageTime && (
-            <span style={{ fontSize: 11, color: '#64748b' }}>
+            <span style={{ fontSize: 11, color: '#64748b', whiteSpace: 'nowrap' }}>
               Triaged: {record.triageTime}
             </span>
           )}
@@ -69,21 +69,31 @@ export const EmergencyDashboardPage: React.FC = () => {
       title: 'Patient Details',
       dataIndex: 'patientName',
       key: 'patientName',
-      width: 200,
+      width: 220,
       render: (name: string, record) => (
-        <div>
+        <div style={{ minWidth: 0, overflow: 'hidden' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontWeight: 600, color: '#0f172a' }}>{name}</span>
+            <span
+              style={{
+                fontWeight: 600,
+                color: '#0f172a',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {name}
+            </span>
             {record.isUnidentified && (
-              <Tag color="red" style={{ fontSize: 10, padding: '0 4px', lineHeight: '16px' }}>
+              <Tag color="red" style={{ fontSize: 10, padding: '0 4px', lineHeight: '16px', flexShrink: 0 }}>
                 UNKNOWN
               </Tag>
             )}
           </div>
-          <div style={{ fontSize: 12, color: '#64748b', fontFamily: 'monospace' }}>
+          <div style={{ fontSize: 12, color: '#64748b', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>
             {record.patientMrn}
           </div>
-          <div style={{ fontSize: 11, color: '#94a3b8' }}>
+          <div style={{ fontSize: 11, color: '#94a3b8', whiteSpace: 'nowrap' }}>
             {record.age ? `${record.age} yrs` : 'Age unk.'} • {record.gender}
           </div>
         </div>
@@ -102,7 +112,7 @@ export const EmergencyDashboardPage: React.FC = () => {
           referral: '#8b5cf6',
         };
         return (
-          <div>
+          <div style={{ whiteSpace: 'nowrap' }}>
             <div style={{ fontWeight: 600, color: '#1e293b' }}>{time}</div>
             <Tag
               style={{
@@ -123,12 +133,23 @@ export const EmergencyDashboardPage: React.FC = () => {
       title: 'Chief Complaint',
       dataIndex: 'chiefComplaint',
       key: 'chiefComplaint',
+      width: 280,
       ellipsis: true,
       render: (complaint: string) => (
-        <Tooltip title={complaint}>
-          <span style={{ color: '#0f172a', fontWeight: 500, fontSize: 13 }}>
+        <Tooltip title={complaint} placement="topLeft">
+          <div
+            style={{
+              color: '#0f172a',
+              fontWeight: 500,
+              fontSize: 13,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: 260,
+            }}
+          >
             {complaint}
-          </span>
+          </div>
         </Tooltip>
       ),
     },
@@ -139,21 +160,21 @@ export const EmergencyDashboardPage: React.FC = () => {
       width: 140,
       render: (bay: string | undefined) =>
         bay ? (
-          <Tag style={{ background: '#e0f2fe', color: '#0369a1', borderColor: '#bae6fd', fontWeight: 600 }}>
+          <Tag style={{ background: '#e0f2fe', color: '#0369a1', borderColor: '#bae6fd', fontWeight: 600, whiteSpace: 'nowrap' }}>
             {bay}
           </Tag>
         ) : (
-          <span style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: 12 }}>Unallocated</span>
+          <span style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: 12, whiteSpace: 'nowrap' }}>Unallocated</span>
         ),
     },
     {
       title: 'Vitals Status',
       key: 'vitals',
-      width: 150,
+      width: 160,
       render: (_, record) => {
         if (!record.vitals) {
           return (
-            <span style={{ fontSize: 12, color: '#f59e0b', fontWeight: 500 }}>
+            <span style={{ fontSize: 12, color: '#f59e0b', fontWeight: 500, whiteSpace: 'nowrap' }}>
               ⚠️ Vitals Pending
             </span>
           );
@@ -166,7 +187,7 @@ export const EmergencyDashboardPage: React.FC = () => {
         const spO2 = record.vitals.spO2 ? `${record.vitals.spO2}%` : '--';
 
         return (
-          <div style={{ fontSize: 11, lineHeight: '16px' }}>
+          <div style={{ fontSize: 11, lineHeight: '16px', whiteSpace: 'nowrap' }}>
             <div>BP: <strong style={{ color: '#1e293b' }}>{bp}</strong></div>
             <div>
               HR:{' '}
@@ -188,15 +209,20 @@ export const EmergencyDashboardPage: React.FC = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 140,
-      render: (status: EmergencyStatus) => <EmergencyStatusTag status={status} />,
+      width: 150,
+      render: (status: EmergencyStatus) => (
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <EmergencyStatusTag status={status} />
+        </div>
+      ),
     },
     {
       title: 'Actions',
       key: 'actions',
       width: 170,
+      fixed: 'right',
       render: (_, record) => (
-        <Space size="small">
+        <Space size="small" style={{ whiteSpace: 'nowrap' }}>
           {record.status === 'registered' ? (
             <Button
               type="primary"
@@ -250,17 +276,21 @@ export const EmergencyDashboardPage: React.FC = () => {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span
+              className="clinical-pulse-red"
               style={{
                 width: 12,
                 height: 12,
                 borderRadius: '50%',
                 backgroundColor: '#ef4444',
-                boxShadow: '0 0 8px rgba(239, 68, 68, 0.8)',
+                boxShadow: '0 0 10px rgba(239, 68, 68, 0.8)',
               }}
             />
-            <Typography.Title level={3} style={{ margin: 0, fontWeight: 700, fontSize: 22 }}>
+            <Typography.Title level={3} style={{ margin: 0, fontWeight: 800, fontSize: 22, color: '#0f172a' }}>
               Emergency Department (ED)
             </Typography.Title>
+            <Tag color="red" style={{ fontWeight: 700, borderRadius: 6, textTransform: 'uppercase', fontSize: 11 }}>
+              LEVEL 1 TRAUMA
+            </Tag>
           </div>
           <Typography.Text type="secondary" style={{ fontSize: 13 }}>
             Real-time emergency triage, resuscitation tracking, and acute patient disposition
@@ -271,7 +301,7 @@ export const EmergencyDashboardPage: React.FC = () => {
           <Button
             icon={<ReloadOutlined spin={isFetching} />}
             onClick={() => refetch()}
-            style={{ fontWeight: 500 }}
+            style={{ fontWeight: 500, borderRadius: 8 }}
           >
             Refresh Board
           </Button>
@@ -281,7 +311,7 @@ export const EmergencyDashboardPage: React.FC = () => {
             icon={<UserAddOutlined />}
             onClick={() => setIsRegisterOpen(true)}
             size="large"
-            style={{ fontWeight: 600, boxShadow: '0 2px 6px rgba(239, 68, 68, 0.3)' }}
+            style={{ fontWeight: 700, borderRadius: 8, boxShadow: '0 4px 14px rgba(239, 68, 68, 0.35)' }}
           >
             Register Emergency Patient
           </Button>
@@ -291,11 +321,11 @@ export const EmergencyDashboardPage: React.FC = () => {
       {/* KPI Cards Row */}
       <Row gutter={[16, 16]} style={{ marginBottom: 20 }}>
         <Col xs={24} sm={12} md={6} lg={4}>
-          <Card size="small" style={{ borderRadius: 10, borderColor: '#e2e8f0' }}>
+          <Card size="small" className="hover-lift" style={{ borderRadius: 14, borderColor: '#e2e8f0', background: '#ffffff' }}>
             <Statistic
-              title={<span style={{ fontSize: 12, fontWeight: 600, color: '#64748b' }}>ACTIVE CASES</span>}
+              title={<span style={{ fontSize: 11, fontWeight: 700, color: '#64748b', letterSpacing: '0.04em' }}>ACTIVE CASES</span>}
               value={stats?.activeCases ?? cases.length}
-              styles={{ content: { color: '#0f172a', fontWeight: 800, fontSize: 24 } }}
+              styles={{ content: { color: '#0f172a', fontWeight: 800, fontSize: 26 } }}
               prefix={<AlertOutlined style={{ color: '#0284c7' }} />}
             />
           </Card>
@@ -304,16 +334,18 @@ export const EmergencyDashboardPage: React.FC = () => {
         <Col xs={24} sm={12} md={6} lg={5}>
           <Card
             size="small"
+            className="hover-lift"
             style={{
-              borderRadius: 10,
-              background: '#fef2f2',
+              borderRadius: 14,
+              background: 'linear-gradient(180deg, #fff5f5 0%, #fef2f2 100%)',
               borderColor: '#fecaca',
+              boxShadow: '0 2px 8px rgba(239, 68, 68, 0.08)',
             }}
           >
             <Statistic
-              title={<span style={{ fontSize: 12, fontWeight: 700, color: '#991b1b' }}>P1 RESUSCITATION</span>}
+              title={<span style={{ fontSize: 11, fontWeight: 800, color: '#991b1b', letterSpacing: '0.04em' }}>P1 RESUSCITATION</span>}
               value={stats?.resuscitationCount ?? cases.filter((c) => c.triageCategory === 'immediate').length}
-              styles={{ content: { color: '#dc2626', fontWeight: 800, fontSize: 24 } }}
+              styles={{ content: { color: '#dc2626', fontWeight: 800, fontSize: 26 } }}
               prefix={<ThunderboltOutlined style={{ color: '#ef4444' }} />}
             />
           </Card>
@@ -322,44 +354,46 @@ export const EmergencyDashboardPage: React.FC = () => {
         <Col xs={24} sm={12} md={6} lg={5}>
           <Card
             size="small"
+            className="hover-lift"
             style={{
-              borderRadius: 10,
-              background: '#fff7ed',
+              borderRadius: 14,
+              background: 'linear-gradient(180deg, #fffaf5 0%, #fff7ed 100%)',
               borderColor: '#fed7aa',
+              boxShadow: '0 2px 8px rgba(249, 115, 22, 0.08)',
             }}
           >
             <Statistic
-              title={<span style={{ fontSize: 12, fontWeight: 700, color: '#9a3412' }}>P2 VERY URGENT</span>}
+              title={<span style={{ fontSize: 11, fontWeight: 800, color: '#9a3412', letterSpacing: '0.04em' }}>P2 VERY URGENT</span>}
               value={stats?.veryUrgentCount ?? cases.filter((c) => c.triageCategory === 'very_urgent').length}
-              styles={{ content: { color: '#ea580c', fontWeight: 800, fontSize: 24 } }}
+              styles={{ content: { color: '#ea580c', fontWeight: 800, fontSize: 26 } }}
               prefix={<HeartOutlined style={{ color: '#f97316' }} />}
             />
           </Card>
         </Col>
 
         <Col xs={24} sm={12} md={6} lg={5}>
-          <Card size="small" style={{ borderRadius: 10, borderColor: '#e2e8f0' }}>
+          <Card size="small" className="hover-lift" style={{ borderRadius: 14, borderColor: '#e2e8f0', background: '#ffffff' }}>
             <Statistic
-              title={<span style={{ fontSize: 12, fontWeight: 600, color: '#64748b' }}>IN TREATMENT</span>}
+              title={<span style={{ fontSize: 11, fontWeight: 700, color: '#64748b', letterSpacing: '0.04em' }}>IN TREATMENT</span>}
               value={stats?.inTreatmentCount ?? cases.filter((c) => c.status === 'in_treatment').length}
-              styles={{ content: { color: '#8b5cf6', fontWeight: 800, fontSize: 24 } }}
+              styles={{ content: { color: '#8b5cf6', fontWeight: 800, fontSize: 26 } }}
             />
           </Card>
         </Col>
 
         <Col xs={24} sm={12} md={6} lg={5}>
-          <Card size="small" style={{ borderRadius: 10, borderColor: '#e2e8f0' }}>
+          <Card size="small" className="hover-lift" style={{ borderRadius: 14, borderColor: '#e2e8f0', background: '#ffffff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: '#64748b' }}>ED OCCUPANCY</div>
-                <div style={{ fontSize: 24, fontWeight: 800, color: '#0f172a' }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#64748b', letterSpacing: '0.04em' }}>ED OCCUPANCY</div>
+                <div style={{ fontSize: 26, fontWeight: 800, color: '#0f172a' }}>
                   {stats?.occupancyRate ?? 68}%
                 </div>
               </div>
               <Progress
                 type="circle"
                 percent={stats?.occupancyRate ?? 68}
-                size={40}
+                size={44}
                 strokeColor="#0284c7"
               />
             </div>
@@ -452,12 +486,13 @@ export const EmergencyDashboardPage: React.FC = () => {
           columns={columns}
           dataSource={cases}
           loading={isLoading}
+          tableLayout="fixed"
           pagination={{
             pageSize: 10,
             showSizeChanger: true,
             showTotal: (total) => `Total ${total} emergency cases`,
           }}
-          scroll={{ x: 1100 }}
+          scroll={{ x: 1420 }}
         />
       </Card>
 
