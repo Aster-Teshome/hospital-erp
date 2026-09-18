@@ -576,6 +576,7 @@ export function AppointmentsPage() {
           dataSource={appointments}
           loading={isLoading}
           pagination={{ pageSize: 8 }}
+          scroll={{ x: 850 }}
           onRow={(record) => ({
             onClick: (e) => {
               if (

@@ -295,7 +295,7 @@ export const EmergencyDashboardPage: React.FC = () => {
             <Statistic
               title={<span style={{ fontSize: 12, fontWeight: 600, color: '#64748b' }}>ACTIVE CASES</span>}
               value={stats?.activeCases ?? cases.length}
-              valueStyle={{ color: '#0f172a', fontWeight: 800, fontSize: 24 }}
+              styles={{ content: { color: '#0f172a', fontWeight: 800, fontSize: 24 } }}
               prefix={<AlertOutlined style={{ color: '#0284c7' }} />}
             />
           </Card>
@@ -313,7 +313,7 @@ export const EmergencyDashboardPage: React.FC = () => {
             <Statistic
               title={<span style={{ fontSize: 12, fontWeight: 700, color: '#991b1b' }}>P1 RESUSCITATION</span>}
               value={stats?.resuscitationCount ?? cases.filter((c) => c.triageCategory === 'immediate').length}
-              valueStyle={{ color: '#dc2626', fontWeight: 800, fontSize: 24 }}
+              styles={{ content: { color: '#dc2626', fontWeight: 800, fontSize: 24 } }}
               prefix={<ThunderboltOutlined style={{ color: '#ef4444' }} />}
             />
           </Card>
@@ -331,7 +331,7 @@ export const EmergencyDashboardPage: React.FC = () => {
             <Statistic
               title={<span style={{ fontSize: 12, fontWeight: 700, color: '#9a3412' }}>P2 VERY URGENT</span>}
               value={stats?.veryUrgentCount ?? cases.filter((c) => c.triageCategory === 'very_urgent').length}
-              valueStyle={{ color: '#ea580c', fontWeight: 800, fontSize: 24 }}
+              styles={{ content: { color: '#ea580c', fontWeight: 800, fontSize: 24 } }}
               prefix={<HeartOutlined style={{ color: '#f97316' }} />}
             />
           </Card>
@@ -342,7 +342,7 @@ export const EmergencyDashboardPage: React.FC = () => {
             <Statistic
               title={<span style={{ fontSize: 12, fontWeight: 600, color: '#64748b' }}>IN TREATMENT</span>}
               value={stats?.inTreatmentCount ?? cases.filter((c) => c.status === 'in_treatment').length}
-              valueStyle={{ color: '#8b5cf6', fontWeight: 800, fontSize: 24 }}
+              styles={{ content: { color: '#8b5cf6', fontWeight: 800, fontSize: 24 } }}
             />
           </Card>
         </Col>
@@ -444,7 +444,7 @@ export const EmergencyDashboardPage: React.FC = () => {
 
       {/* Main Table */}
       <Card
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
         style={{ borderRadius: 12, borderColor: '#e2e8f0', overflow: 'hidden' }}
       >
         <Table<EmergencyCase>

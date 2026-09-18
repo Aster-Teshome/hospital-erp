@@ -95,7 +95,7 @@ export function DischargeModal({ open, admission, bed, onClose }: DischargeModal
       onCancel={onClose}
       footer={null}
       destroyOnHidden
-      width={680}
+      width={Math.min(680, typeof window !== 'undefined' ? window.innerWidth - 32 : 680)}
       style={{ top: 40 }}
     >
       {/* Patient stay brief */}
@@ -213,7 +213,7 @@ export function DischargeModal({ open, admission, bed, onClose }: DischargeModal
         <Alert
           type="info"
           showIcon
-          message={`Submitting this discharge will automatically mark Bed ${bedNumber} as 'Cleaning' so nursing/sanitation staff can prepare it for the next patient.`}
+          title={`Submitting this discharge will automatically mark Bed ${bedNumber} as 'Cleaning' so nursing/sanitation staff can prepare it for the next patient.`}
           style={{ marginBottom: 16 }}
         />
 

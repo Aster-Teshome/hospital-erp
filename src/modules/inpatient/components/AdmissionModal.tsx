@@ -14,7 +14,7 @@ import {
   Typography,
   message,
 } from 'antd';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useAdmitPatient, useBeds, useWards } from '../hooks/inpatient.hooks';
 import { type AdmissionInput, admissionSchema } from '../inpatient.validation';
 import type { Bed } from '../types';
@@ -33,7 +33,6 @@ export function AdmissionModal({ open, preSelectedBed, onClose }: AdmissionModal
     control,
     handleSubmit,
     reset,
-    watch,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<AdmissionInput>({
@@ -54,7 +53,7 @@ export function AdmissionModal({ open, preSelectedBed, onClose }: AdmissionModal
     },
   });
 
-  const selectedWardId = watch('wardId');
+  const selectedWardId = useWatch({ control, name: 'wardId' });
   const { data: beds = [] } = useBeds(selectedWardId || undefined);
 
   // Available beds in selected ward
@@ -107,7 +106,7 @@ export function AdmissionModal({ open, preSelectedBed, onClose }: AdmissionModal
       onCancel={onClose}
       footer={null}
       destroyOnHidden
-      width={720}
+      width={Math.min(720, typeof window !== 'undefined' ? window.innerWidth - 32 : 720)}
       style={{ top: 30 }}
     >
       <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: 16 }}>
@@ -318,7 +317,7 @@ export function AdmissionModal({ open, preSelectedBed, onClose }: AdmissionModal
           <Alert
             type="warning"
             showIcon
-            message="No beds currently available in this ward. Please select another ward or discharge/transfer an occupant."
+            title="No beds currently available in this ward. Please select another ward or discharge/transfer an occupant."
             style={{ marginBottom: 16 }}
           />
         )}

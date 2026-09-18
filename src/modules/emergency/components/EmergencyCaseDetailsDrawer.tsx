@@ -104,10 +104,10 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
           </Space>
         </div>
       }
-      width={780}
+      size={Math.min(780, typeof window !== 'undefined' ? window.innerWidth : 780)}
       open={open}
       onClose={onClose}
-      destroyOnClose
+      destroyOnHidden
     >
       <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
         <Descriptions.Item label="Age & Gender">
@@ -130,11 +130,11 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
         </Descriptions.Item>
       </Descriptions>
 
-      {/* Emergency Vitals Card */}
+      {/* Vitals Display */}
       <Card
+        title={<span style={{ fontSize: 14, fontWeight: 700 }}>Vital Signs & Physiological Parameters</span>}
         size="small"
-        title="Emergency Vital Signs & Acuity"
-        style={{ marginTop: 16, background: '#f8fafc' }}
+        style={{ marginTop: 16, borderColor: '#e2e8f0', background: '#f8fafc' }}
         extra={
           emergencyCase.status === 'registered' && onStartTriage ? (
             <Button
@@ -161,7 +161,7 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
                     : 'N/A'
                 }
                 suffix="mmHg"
-                valueStyle={{ fontSize: 16, fontWeight: 700, color: '#0f172a' }}
+                styles={{ content: { fontSize: 16, fontWeight: 700, color: '#0f172a' } }}
               />
             </Col>
             <Col span={6}>
@@ -169,10 +169,12 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
                 title="Heart Rate"
                 value={emergencyCase.vitals.heartRate ?? 'N/A'}
                 suffix="bpm"
-                valueStyle={{
-                  fontSize: 16,
-                  fontWeight: 700,
-                  color: (emergencyCase.vitals.heartRate ?? 0) > 100 ? '#ef4444' : '#0f172a',
+                styles={{
+                  content: {
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color: (emergencyCase.vitals.heartRate ?? 0) > 100 ? '#ef4444' : '#0f172a',
+                  },
                 }}
               />
             </Col>
@@ -181,10 +183,12 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
                 title="SpO2 Saturation"
                 value={emergencyCase.vitals.spO2 ?? 'N/A'}
                 suffix="%"
-                valueStyle={{
-                  fontSize: 16,
-                  fontWeight: 700,
-                  color: (emergencyCase.vitals.spO2 ?? 100) < 94 ? '#ef4444' : '#10b981',
+                styles={{
+                  content: {
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color: (emergencyCase.vitals.spO2 ?? 100) < 94 ? '#ef4444' : '#10b981',
+                  },
                 }}
               />
             </Col>
@@ -193,7 +197,7 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
                 title="Temperature"
                 value={emergencyCase.vitals.temperature ?? 'N/A'}
                 suffix="°C"
-                valueStyle={{ fontSize: 16, fontWeight: 700, color: '#0f172a' }}
+                styles={{ content: { fontSize: 16, fontWeight: 700, color: '#0f172a' } }}
               />
             </Col>
             <Col span={6}>
@@ -201,17 +205,19 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
                 title="Resp Rate"
                 value={emergencyCase.vitals.respiratoryRate ?? 'N/A'}
                 suffix="/min"
-                valueStyle={{ fontSize: 16, fontWeight: 700 }}
+                styles={{ content: { fontSize: 16, fontWeight: 700 } }}
               />
             </Col>
             <Col span={6}>
               <Statistic
                 title="GCS Neuro"
                 value={emergencyCase.vitals.gcs ? `${emergencyCase.vitals.gcs}/15` : 'N/A'}
-                valueStyle={{
-                  fontSize: 16,
-                  fontWeight: 700,
-                  color: (emergencyCase.vitals.gcs ?? 15) < 13 ? '#ef4444' : '#0f172a',
+                styles={{
+                  content: {
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color: (emergencyCase.vitals.gcs ?? 15) < 13 ? '#ef4444' : '#0f172a',
+                  },
                 }}
               />
             </Col>
@@ -219,7 +225,7 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
               <Statistic
                 title="Pain Score"
                 value={emergencyCase.vitals.painScore ? `${emergencyCase.vitals.painScore}/10` : '0/10'}
-                valueStyle={{ fontSize: 16, fontWeight: 700 }}
+                styles={{ content: { fontSize: 16, fontWeight: 700 } }}
               />
             </Col>
             <Col span={6}>
@@ -227,14 +233,14 @@ export const EmergencyCaseDetailsDrawer: React.FC<EmergencyCaseDetailsDrawerProp
                 title="Blood Glucose"
                 value={emergencyCase.vitals.bloodGlucose ?? 'N/A'}
                 suffix="mg/dL"
-                valueStyle={{ fontSize: 16, fontWeight: 700 }}
+                styles={{ content: { fontSize: 16, fontWeight: 700 } }}
               />
             </Col>
           </Row>
         ) : (
           <Alert
             type="warning"
-            message="No vitals recorded yet. Patient requires prompt triage triage assessment."
+            title="No vitals recorded yet. Patient requires prompt triage assessment."
             showIcon
           />
         )}

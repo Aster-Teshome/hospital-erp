@@ -119,10 +119,10 @@ export const TriageAssessmentDrawer: React.FC<TriageAssessmentDrawerProps> = ({
           </div>
         </div>
       }
-      width={720}
+      size={Math.min(720, typeof window !== 'undefined' ? window.innerWidth : 720)}
       open={open}
       onClose={onClose}
-      destroyOnClose
+      destroyOnHidden
       extra={
         <Space>
           <Button onClick={onClose}>Cancel</Button>
@@ -137,36 +137,23 @@ export const TriageAssessmentDrawer: React.FC<TriageAssessmentDrawerProps> = ({
         </Space>
       }
     >
+      {/* Patient Demographic Summary */}
       {emergencyCase && (
-        <Card
-          size="small"
-          style={{
-            marginBottom: 20,
-            background: '#f8fafc',
-            borderColor: '#e2e8f0',
-          }}
-        >
-          <Descriptions size="small" column={{ xs: 1, sm: 2, md: 3 }}>
-            <Descriptions.Item label={<strong style={{ color: '#475569' }}>Patient</strong>}>
-              <span style={{ fontWeight: 600, color: '#0f172a' }}>
-                {emergencyCase.patientName}
-              </span>
+        <Card size="small" style={{ marginBottom: 16, borderColor: '#e2e8f0', background: '#f8fafc' }}>
+          <Descriptions size="small" column={{ xs: 1, sm: 2 }}>
+            <Descriptions.Item label="Patient Name">
+              <strong style={{ color: '#0f172a' }}>{emergencyCase.patientName}</strong>
             </Descriptions.Item>
-            <Descriptions.Item label={<strong style={{ color: '#475569' }}>MRN</strong>}>
-              <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>
-                {emergencyCase.patientMrn}
-              </span>
+            <Descriptions.Item label="MRN / Identifier">
+              <span style={{ fontFamily: 'monospace' }}>{emergencyCase.patientMrn}</span>
             </Descriptions.Item>
-            <Descriptions.Item label={<strong style={{ color: '#475569' }}>Age / Gender</strong>}>
+            <Descriptions.Item label="Demographics">
               {emergencyCase.age ? `${emergencyCase.age} yrs` : 'Unknown'}, {emergencyCase.gender}
             </Descriptions.Item>
-            <Descriptions.Item label={<strong style={{ color: '#475569' }}>Arrival</strong>}>
-              {emergencyCase.arrivalTime} ({emergencyCase.arrivalMode.toUpperCase()})
+            <Descriptions.Item label="Arrival Mode">
+              <span style={{ textTransform: 'uppercase', fontWeight: 600 }}>{emergencyCase.arrivalMode}</span>
             </Descriptions.Item>
-            <Descriptions.Item
-              span={2}
-              label={<strong style={{ color: '#475569' }}>Chief Complaint</strong>}
-            >
+            <Descriptions.Item span={2} label="Chief Complaint">
               <span style={{ color: '#b91c1c', fontWeight: 500 }}>
                 {emergencyCase.chiefComplaint}
               </span>
@@ -179,7 +166,7 @@ export const TriageAssessmentDrawer: React.FC<TriageAssessmentDrawerProps> = ({
         {triageMutation.isError && (
           <Alert
             type="error"
-            message={extractErrorMessage(triageMutation.error)}
+            title={extractErrorMessage(triageMutation.error)}
             showIcon
             style={{ marginBottom: 16 }}
           />

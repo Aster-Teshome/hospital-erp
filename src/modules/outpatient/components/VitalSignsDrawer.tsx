@@ -74,7 +74,7 @@ export function VitalSignsDrawer({ open, visit, onClose }: VitalSignsDrawerProps
       title={`Record Vital Signs - ${visit?.patientName ?? ''}`}
       open={open}
       onClose={onClose}
-      width={500}
+      size={Math.min(500, typeof window !== 'undefined' ? window.innerWidth : 500)}
       extra={
         <Space>
           <Button onClick={onClose}>Cancel</Button>
@@ -92,7 +92,7 @@ export function VitalSignsDrawer({ open, visit, onClose }: VitalSignsDrawerProps
         <Alert
           type="error"
           showIcon
-          message="Vitals Error"
+          title="Vitals Error"
           description={submitError}
           style={{ marginBottom: 16 }}
         />

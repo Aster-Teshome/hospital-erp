@@ -363,7 +363,7 @@ export function BedManagementGrid({
                     )}
 
                     {isOccupied && bed.currentPatient && (
-                      <Space style={{ width: '100%' }} direction="vertical" size={6}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }}>
                         <Button
                           icon={<EyeOutlined />}
                           block
@@ -393,7 +393,7 @@ export function BedManagementGrid({
                             Discharge
                           </Button>
                         </div>
-                      </Space>
+                      </div>
                     )}
 
                     {isCleaning && (

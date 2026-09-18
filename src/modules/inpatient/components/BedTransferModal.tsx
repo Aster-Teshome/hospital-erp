@@ -12,7 +12,7 @@ import {
   Typography,
   message,
 } from 'antd';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useBeds, useTransferBed, useWards } from '../hooks/inpatient.hooks';
 import { type BedTransferInput, bedTransferSchema } from '../inpatient.validation';
 import type { Bed, InpatientAdmission } from '../types';
@@ -37,7 +37,6 @@ export function BedTransferModal({ open, admission, bed, onClose }: BedTransferM
     control,
     handleSubmit,
     reset,
-    watch,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<BedTransferInput>({
@@ -49,7 +48,7 @@ export function BedTransferModal({ open, admission, bed, onClose }: BedTransferM
     },
   });
 
-  const selectedTargetWardId = watch('targetWardId');
+  const selectedTargetWardId = useWatch({ control, name: 'targetWardId' });
   const { data: availableTargetBeds = [] } = useBeds(selectedTargetWardId || undefined);
 
   // Available beds in selected target ward
@@ -99,7 +98,7 @@ export function BedTransferModal({ open, admission, bed, onClose }: BedTransferM
       onCancel={onClose}
       footer={null}
       destroyOnHidden
-      width={560}
+      width={Math.min(560, typeof window !== 'undefined' ? window.innerWidth - 32 : 560)}
     >
       <Card
         styles={{ body: { padding: '12px 16px' } }}

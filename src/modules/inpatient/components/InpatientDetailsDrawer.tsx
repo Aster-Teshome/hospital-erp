@@ -61,7 +61,7 @@ export function InpatientDetailsDrawer({
       }
       open={open}
       onClose={onClose}
-      width={580}
+      size={Math.min(580, typeof window !== 'undefined' ? window.innerWidth : 580)}
       styles={{ body: { padding: '20px' } }}
       extra={
         status === 'admitted' && (
@@ -165,7 +165,7 @@ export function InpatientDetailsDrawer({
         <Alert
           type="success"
           showIcon
-          message={`Discharged on ${admission.dischargeDate} (${admission.dischargeCondition?.toUpperCase()})`}
+          title={`Discharged on ${admission.dischargeDate} (${admission.dischargeCondition?.toUpperCase()})`}
           description={
             <div>
               <div style={{ marginTop: 4 }}>

@@ -386,6 +386,7 @@ export function InpatientDashboardPage() {
                   rowKey="id"
                   loading={isLoadingAdmissions}
                   pagination={{ pageSize: 8 }}
+                  scroll={{ x: 900 }}
                   style={{ marginTop: 8 }}
                 />
               ),
@@ -405,6 +406,7 @@ export function InpatientDashboardPage() {
                   rowKey="id"
                   loading={isLoadingAdmissions}
                   pagination={{ pageSize: 8 }}
+                  scroll={{ x: 800 }}
                   style={{ marginTop: 8 }}
                 />
               ),

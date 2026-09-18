@@ -58,13 +58,14 @@ export function CheckInModal({ open, onClose }: CheckInModalProps) {
       onCancel={handleCancel}
       confirmLoading={checkInMutation.isPending}
       okText="Complete Check-In"
+      width={Math.min(520, typeof window !== 'undefined' ? window.innerWidth - 32 : 520)}
       destroyOnHidden
     >
       {submitError && (
         <Alert
           type="error"
           showIcon
-          message="Check-in Error"
+          title="Check-in Error"
           description={submitError}
           style={{ marginBottom: 16 }}
         />
