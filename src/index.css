@@ -126,6 +126,43 @@ body {
   box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
 }
 
+/* Header shift badge responsive visibility */
+.header-shift-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1280px) {
+  .header-shift-badge {
+    display: none !important;
+  }
+}
+
+/* Workstation Card Styling */
+.workstation-card {
+  border-radius: 16px !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer;
+  background: #ffffff;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.workstation-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.1), 0 6px 12px -2px rgba(15, 23, 42, 0.05) !important;
+  border-color: #cbd5e1 !important;
+}
+
 /* Mobile responsive optimizations */
 .ant-table-wrapper {
   -webkit-overflow-scrolling: touch;
