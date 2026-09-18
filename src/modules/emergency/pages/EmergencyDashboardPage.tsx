@@ -71,15 +71,14 @@ export const EmergencyDashboardPage: React.FC = () => {
       key: 'patientName',
       width: 220,
       render: (name: string, record) => (
-        <div style={{ minWidth: 0, overflow: 'hidden' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span
               style={{
-                fontWeight: 600,
+                fontWeight: 700,
                 color: '#0f172a',
+                fontSize: 13,
                 whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
               }}
             >
               {name}
@@ -90,11 +89,12 @@ export const EmergencyDashboardPage: React.FC = () => {
               </Tag>
             )}
           </div>
-          <div style={{ fontSize: 12, color: '#64748b', fontFamily: 'monospace', whiteSpace: 'nowrap' }}>
-            {record.patientMrn}
-          </div>
-          <div style={{ fontSize: 11, color: '#94a3b8', whiteSpace: 'nowrap' }}>
-            {record.age ? `${record.age} yrs` : 'Age unk.'} • {record.gender}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#64748b' }}>
+            <span className="clinical-mono" style={{ color: '#0284c7', fontWeight: 600 }}>
+              {record.patientMrn}
+            </span>
+            <span>•</span>
+            <span>{record.age ? `${record.age} yrs` : 'Age unk.'}, {record.gender}</span>
           </div>
         </div>
       ),
@@ -112,15 +112,17 @@ export const EmergencyDashboardPage: React.FC = () => {
           referral: '#8b5cf6',
         };
         return (
-          <div style={{ whiteSpace: 'nowrap' }}>
-            <div style={{ fontWeight: 600, color: '#1e293b' }}>{time}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2, whiteSpace: 'nowrap' }}>
+            <span style={{ fontWeight: 700, color: '#1e293b', fontSize: 13 }}>{time}</span>
             <Tag
               style={{
                 fontSize: 10,
                 color: modeColors[record.arrivalMode] || '#64748b',
                 background: '#f8fafc',
                 textTransform: 'uppercase',
-                marginTop: 2,
+                fontWeight: 600,
+                margin: 0,
+                width: 'fit-content',
               }}
             >
               {record.arrivalMode}
@@ -133,7 +135,7 @@ export const EmergencyDashboardPage: React.FC = () => {
       title: 'Chief Complaint',
       dataIndex: 'chiefComplaint',
       key: 'chiefComplaint',
-      width: 280,
+      width: 260,
       ellipsis: true,
       render: (complaint: string) => (
         <Tooltip title={complaint} placement="topLeft">
@@ -145,7 +147,7 @@ export const EmergencyDashboardPage: React.FC = () => {
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              maxWidth: 260,
+              maxWidth: 240,
             }}
           >
             {complaint}
@@ -160,7 +162,7 @@ export const EmergencyDashboardPage: React.FC = () => {
       width: 140,
       render: (bay: string | undefined) =>
         bay ? (
-          <Tag style={{ background: '#e0f2fe', color: '#0369a1', borderColor: '#bae6fd', fontWeight: 600, whiteSpace: 'nowrap' }}>
+          <Tag style={{ background: '#e0f2fe', color: '#0369a1', borderColor: '#bae6fd', fontWeight: 700, fontSize: 12, margin: 0, whiteSpace: 'nowrap' }}>
             {bay}
           </Tag>
         ) : (
@@ -170,11 +172,11 @@ export const EmergencyDashboardPage: React.FC = () => {
     {
       title: 'Vitals Status',
       key: 'vitals',
-      width: 160,
+      width: 170,
       render: (_, record) => {
         if (!record.vitals) {
           return (
-            <span style={{ fontSize: 12, color: '#f59e0b', fontWeight: 500, whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: 12, color: '#f59e0b', fontWeight: 600, whiteSpace: 'nowrap' }}>
               ⚠️ Vitals Pending
             </span>
           );
@@ -187,19 +189,25 @@ export const EmergencyDashboardPage: React.FC = () => {
         const spO2 = record.vitals.spO2 ? `${record.vitals.spO2}%` : '--';
 
         return (
-          <div style={{ fontSize: 11, lineHeight: '16px', whiteSpace: 'nowrap' }}>
-            <div>BP: <strong style={{ color: '#1e293b' }}>{bp}</strong></div>
-            <div>
-              HR:{' '}
-              <strong style={{ color: (record.vitals.heartRate ?? 0) > 100 ? '#ef4444' : '#1e293b' }}>
-                {hr} bpm
-              </strong>
+          <div
+            style={{
+              padding: '4px 8px',
+              background: '#f8fafc',
+              borderRadius: 6,
+              border: '1px solid #e2e8f0',
+              display: 'inline-flex',
+              flexDirection: 'column',
+              gap: 2,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <div style={{ fontSize: 11, color: '#334155' }}>
+              BP: <strong className="clinical-mono" style={{ color: '#0f172a' }}>{bp}</strong>
             </div>
-            <div>
-              SpO2:{' '}
-              <strong style={{ color: (record.vitals.spO2 ?? 100) < 94 ? '#ef4444' : '#10b981' }}>
-                {spO2}
-              </strong>
+            <div style={{ fontSize: 11, color: '#64748b' }}>
+              HR: <strong className="clinical-mono" style={{ color: (record.vitals.heartRate ?? 0) > 100 ? '#ef4444' : '#0f172a' }}>{hr} bpm</strong>
+              {' · '}
+              SpO2: <strong className="clinical-mono" style={{ color: (record.vitals.spO2 ?? 100) < 94 ? '#ef4444' : '#16a34a' }}>{spO2}</strong>
             </div>
           </div>
         );
@@ -486,13 +494,12 @@ export const EmergencyDashboardPage: React.FC = () => {
           columns={columns}
           dataSource={cases}
           loading={isLoading}
-          tableLayout="fixed"
           pagination={{
             pageSize: 10,
             showSizeChanger: true,
             showTotal: (total) => `Total ${total} emergency cases`,
           }}
-          scroll={{ x: 1420 }}
+          scroll={{ x: 1280 }}
         />
       </Card>
 

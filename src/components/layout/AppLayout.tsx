@@ -112,7 +112,7 @@ export function AppLayout() {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        background: 'linear-gradient(180deg, #0a0f1d 0%, #0f172a 100%)',
+        background: 'linear-gradient(180deg, #080d1a 0%, #0c1529 100%)',
         borderRight: '1px solid rgba(255, 255, 255, 0.08)',
       }}
     >
@@ -200,7 +200,7 @@ export function AppLayout() {
           style={{
             background: 'transparent',
             fontSize: 13,
-            fontWeight: 500,
+            fontWeight: 600,
             border: 'none',
           }}
         />
@@ -211,7 +211,7 @@ export function AppLayout() {
         style={{
           padding: !isDrawer && collapsed ? '14px 10px' : '14px 16px',
           borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-          background: 'rgba(15, 23, 42, 0.7)',
+          background: 'rgba(10, 16, 30, 0.85)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: !isDrawer && collapsed ? 'center' : 'space-between',
@@ -223,6 +223,7 @@ export function AppLayout() {
               backgroundColor: '#0284c7',
               color: '#fff',
               flexShrink: 0,
+              boxShadow: '0 2px 6px rgba(2, 132, 199, 0.3)',
             }}
             icon={<UserOutlined />}
           />

@@ -564,7 +564,6 @@ export function AppointmentsPage() {
           columns={columns}
           dataSource={appointments}
           loading={isLoading}
-          tableLayout="fixed"
           pagination={{ pageSize: 8 }}
           scroll={{ x: 950 }}
           onRow={(record) => ({
