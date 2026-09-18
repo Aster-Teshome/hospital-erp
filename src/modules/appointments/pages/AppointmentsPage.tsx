@@ -3,9 +3,11 @@ import {
   Badge,
   Button,
   Card,
+  Col,
   DatePicker,
   Dropdown,
   Popconfirm,
+  Row,
   Select,
   Space,
   Table,
@@ -315,157 +317,143 @@ export function AppointmentsPage() {
       </div>
 
       {/* Appointments KPI Metrics Cards */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: 14,
-        }}
-      >
-        <div
-          className="clinical-card hover-lift"
-          style={{
-            padding: '16px 18px',
-            borderRadius: 14,
-            borderLeft: '4px solid #0284c7',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
-              All Bookings
-            </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
-              {totalCount}
-            </div>
-          </div>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              background: '#e0f2fe',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#0284c7',
-              fontSize: 18,
-            }}
+      <Row gutter={[16, 16]}>
+        <Col xs={12} sm={6}>
+          <Card
+            className="hover-lift"
+            styles={{ body: { padding: '16px 18px' } }}
+            style={{ borderRadius: 14, border: '1px solid #e2e8f0', background: '#ffffff' }}
           >
-            <CalendarOutlined />
-          </div>
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <Typography.Text style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em', display: 'block' }}>
+                  All Bookings
+                </Typography.Text>
+                <div style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
+                  {totalCount}
+                </div>
+              </div>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: '#e0f2fe',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#0284c7',
+                  fontSize: 20,
+                }}
+              >
+                <CalendarOutlined />
+              </div>
+            </div>
+          </Card>
+        </Col>
 
-        <div
-          className="clinical-card hover-lift"
-          style={{
-            padding: '16px 18px',
-            borderRadius: 14,
-            borderLeft: '4px solid #f59e0b',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
-              Scheduled / Confirmed
-            </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: '#b45309', marginTop: 4 }}>
-              {scheduledCount}
-            </div>
-          </div>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              background: '#fef3c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#d97706',
-              fontSize: 18,
-            }}
+        <Col xs={12} sm={6}>
+          <Card
+            className="hover-lift"
+            styles={{ body: { padding: '16px 18px' } }}
+            style={{ borderRadius: 14, border: '1px solid #e2e8f0', background: '#ffffff' }}
           >
-            <ClockCircleOutlined />
-          </div>
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <Typography.Text style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em', display: 'block' }}>
+                  Scheduled / Confirmed
+                </Typography.Text>
+                <div style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
+                  {scheduledCount}
+                </div>
+              </div>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: '#fef3c7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#d97706',
+                  fontSize: 20,
+                }}
+              >
+                <ClockCircleOutlined />
+              </div>
+            </div>
+          </Card>
+        </Col>
 
-        <div
-          className="clinical-card hover-lift"
-          style={{
-            padding: '16px 18px',
-            borderRadius: 14,
-            borderLeft: '4px solid #8b5cf6',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
-              Checked In
-            </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: '#6b21a8', marginTop: 4 }}>
-              {checkedInCount}
-            </div>
-          </div>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              background: '#f3e8ff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#8b5cf6',
-              fontSize: 18,
-            }}
+        <Col xs={12} sm={6}>
+          <Card
+            className="hover-lift"
+            styles={{ body: { padding: '16px 18px' } }}
+            style={{ borderRadius: 14, border: '1px solid #e2e8f0', background: '#ffffff' }}
           >
-            <UserOutlined />
-          </div>
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <Typography.Text style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em', display: 'block' }}>
+                  Checked In
+                </Typography.Text>
+                <div style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
+                  {checkedInCount}
+                </div>
+              </div>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: '#ede9fe',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#7c3aed',
+                  fontSize: 20,
+                }}
+              >
+                <UserOutlined />
+              </div>
+            </div>
+          </Card>
+        </Col>
 
-        <div
-          className="clinical-card hover-lift"
-          style={{
-            padding: '16px 18px',
-            borderRadius: 14,
-            borderLeft: '4px solid #10b981',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em' }}>
-              Completed
-            </div>
-            <div style={{ fontSize: 24, fontWeight: 800, color: '#15803d', marginTop: 4 }}>
-              {completedCount}
-            </div>
-          </div>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              background: '#dcfce7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#10b981',
-              fontSize: 18,
-            }}
+        <Col xs={12} sm={6}>
+          <Card
+            className="hover-lift"
+            styles={{ body: { padding: '16px 18px' } }}
+            style={{ borderRadius: 14, border: '1px solid #e2e8f0', background: '#ffffff' }}
           >
-            <CheckCircleOutlined />
-          </div>
-        </div>
-      </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <Typography.Text style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: '#64748b', letterSpacing: '0.04em', display: 'block' }}>
+                  Completed
+                </Typography.Text>
+                <div style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
+                  {completedCount}
+                </div>
+              </div>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: '#dcfce7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#16a34a',
+                  fontSize: 20,
+                }}
+              >
+                <CheckCircleOutlined />
+              </div>
+            </div>
+          </Card>
+        </Col>
+      </Row>
 
       {/* Appointments List Table with Filter Tabs */}
       <Card style={{ border: '1px solid #e2e8f0', borderRadius: 14 }}>

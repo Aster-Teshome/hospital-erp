@@ -18,37 +18,36 @@ export function DashboardPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      {/* Clinician Hero Welcome Banner */}
-      <Card
-        className="hover-lift"
+      {/* Clinician Executive Overview Banner */}
+      <div
+        className="clinical-card hover-lift"
         style={{
+          padding: '24px 28px',
+          background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)',
+          border: '1px solid #bae6fd',
           borderRadius: 16,
-          background: 'linear-gradient(135deg, #091a2f 0%, #0d2847 50%, #0284c7 100%)',
-          color: '#ffffff',
-          border: '1px solid rgba(56, 189, 248, 0.25)',
-          boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.3)',
-          overflow: 'hidden',
+          boxShadow: '0 4px 20px -4px rgba(2, 132, 199, 0.08)',
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        {/* Subtle decorative background radial accents */}
         <div
           style={{
             position: 'absolute',
             right: -20,
-            top: -50,
-            width: 320,
-            height: 320,
+            top: -20,
+            width: 240,
+            height: 240,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, position: 'relative', zIndex: 1 }}>
-          <div style={{ minWidth: 0 }}>
+          <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
-              <Typography.Title level={3} style={{ color: '#ffffff', margin: 0, fontWeight: 800, letterSpacing: '-0.02em', fontSize: 22 }}>
+              <Typography.Title level={3} style={{ color: '#0f172a', margin: 0, fontWeight: 800, letterSpacing: '-0.02em', fontSize: 24 }}>
                 Welcome back, {user?.firstName ?? 'Staff'} {user?.lastName ?? ''}
               </Typography.Title>
               <span
@@ -57,48 +56,56 @@ export function DashboardPage() {
                   fontWeight: 700,
                   padding: '3px 10px',
                   borderRadius: 12,
-                  background: 'rgba(56, 189, 248, 0.25)',
-                  color: '#38bdf8',
-                  border: '1px solid rgba(56, 189, 248, 0.4)',
+                  background: '#e0f2fe',
+                  color: '#0284c7',
+                  border: '1px solid #bae6fd',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
-                  whiteSpace: 'nowrap',
                 }}
               >
                 On Duty
               </span>
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  padding: '3px 10px',
+                  borderRadius: 12,
+                  background: '#f1f5f9',
+                  color: '#334155',
+                  border: '1px solid #e2e8f0',
+                  textTransform: 'capitalize',
+                }}
+              >
+                Role: {user?.role ?? 'Clinician'}
+              </span>
             </div>
-            <div style={{ color: '#94a3b8', fontSize: 13, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-              <span>Signed in as <strong style={{ color: '#ffffff' }}>{user?.email}</strong></span>
-              <span style={{ color: '#475569' }}>•</span>
-              <span>Assigned Role: <span style={{ textTransform: 'capitalize', color: '#38bdf8', fontWeight: 700 }}>{user?.role}</span></span>
-              <span style={{ color: '#475569' }}>•</span>
-              <span style={{ color: '#cbd5e1' }}>Central Clinical Hospital Station</span>
-            </div>
+            <Typography.Text type="secondary" style={{ fontSize: 13, color: '#475569' }}>
+              Signed in as <strong style={{ color: '#0f172a' }}>{user?.email}</strong> • Central Clinical Hospital Station • Active Shift
+            </Typography.Text>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <div
               style={{
-                padding: '6px 14px',
-                borderRadius: 20,
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(52, 211, 153, 0.35)',
-                color: '#34d399',
-                fontSize: 12,
-                fontWeight: 700,
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 7,
-                whiteSpace: 'nowrap',
+                gap: 8,
+                padding: '7px 16px',
+                borderRadius: 24,
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
+                color: '#065f46',
+                fontWeight: 700,
+                fontSize: 12,
               }}
             >
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', flexShrink: 0 }} />
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981' }} />
               Realtime EMR Synced
             </div>
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Quick Launch Clinical Modules */}
       <div>

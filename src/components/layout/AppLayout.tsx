@@ -378,8 +378,8 @@ export function AppLayout() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 5,
-                  padding: '3px 7px',
-                  borderRadius: 6,
+                  padding: '3px 8px',
+                  borderRadius: 12,
                   background: '#ecfdf5',
                   border: '1px solid #a7f3d0',
                   flexShrink: 0,
@@ -404,31 +404,6 @@ export function AppLayout() {
                 Central Hospital ERP
               </span>
             </div>
-
-            {!isMobile && (
-              <div
-                className="header-shift-badge"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  padding: '3px 10px',
-                  borderRadius: 20,
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
-                  fontSize: 12,
-                  color: '#64748b',
-                  fontWeight: 500,
-                  marginLeft: 4,
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0,
-                }}
-              >
-                <span>🏥 General & Trauma Center</span>
-                <span style={{ color: '#cbd5e1' }}>•</span>
-                <span style={{ color: '#0284c7', fontWeight: 600 }}>Active Shift</span>
-              </div>
-            )}
           </div>
 
           <Space size="middle" align="center" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
