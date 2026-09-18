@@ -591,7 +591,6 @@ export function OutpatientQueuePage() {
           columns={columns}
           dataSource={visits}
           loading={isLoading}
-          tableLayout="fixed"
           pagination={{ pageSize: 8 }}
           scroll={{ x: 1070 }}
           locale={{

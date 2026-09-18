@@ -468,9 +468,8 @@ export function InpatientDashboardPage() {
                   columns={rosterColumns}
                   rowKey="id"
                   loading={isLoadingAdmissions}
-                  tableLayout="fixed"
                   pagination={{ pageSize: 8 }}
-                  scroll={{ x: 1320 }}
+                  scroll={{ x: 1200 }}
                   style={{ marginTop: 8 }}
                 />
               ),
@@ -489,9 +488,8 @@ export function InpatientDashboardPage() {
                   columns={dischargeColumns}
                   rowKey="id"
                   loading={isLoadingAdmissions}
-                  tableLayout="fixed"
                   pagination={{ pageSize: 8 }}
-                  scroll={{ x: 1120 }}
+                  scroll={{ x: 1050 }}
                   style={{ marginTop: 8 }}
                 />
               ),

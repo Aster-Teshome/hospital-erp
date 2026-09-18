@@ -192,21 +192,26 @@ body {
   }
 }
 
-/* Table containment & robust layout rules */
-.ant-table table {
-  table-layout: fixed;
-}
-
+/* Professional table typography and cell spacing */
 .ant-table-cell {
-  word-break: normal;
   vertical-align: middle;
 }
 
-.ant-table-cell-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.ant-table-thead > tr > th {
+  font-weight: 700 !important;
+  color: #475569 !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
   white-space: nowrap;
 }
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
 
 
 
